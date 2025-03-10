@@ -19,6 +19,7 @@ public:
 
     int GetMedals() const { return medals_; }
 
+
     enum class Symbol {
         Cherry,
         RedSeven,
