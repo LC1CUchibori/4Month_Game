@@ -81,9 +81,6 @@ void Reel3::StopRotation()
 	if (lever_->GetStorenum() <= 50) {
 		rotationX = 125.0f;
 	}
-	else if (lever_->GetStorenum() <= 20) {
-		rotationX = 200.0f;
-	}
 
 	// 0～2πの範囲に正規化
 	rotationX = fmod(rotationX, 2.0f * 3.14159265f);
@@ -108,9 +105,7 @@ Reel3::Symbol Reel3::GetResultSymbol()
 		rotationX = 180.0f;
 
 	}
-	else if (lever_->GetStorenum() <= 20) {
-		rotationX = 200.0f;
-	}
+	
 
 	rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);
 

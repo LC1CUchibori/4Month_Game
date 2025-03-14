@@ -45,6 +45,7 @@ private:
 
     Rand rng;
 
+
     int storenum = rng.GetRandamNumber(0,300);
 };
 
