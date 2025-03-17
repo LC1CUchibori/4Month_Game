@@ -16,6 +16,7 @@
 #include "ヘッダーファイル/Lever.h"
 #include "ヘッダーファイル/Button.h"
 #include "ヘッダーファイル/PushButton.h"
+#include "Puchun.h"
 
 
 /// <summary>
@@ -118,6 +119,8 @@ private: // メンバ変数
 	// 投入機
 	Slot* MoneyBox_ = nullptr;
 	Model* modelMoneyBox_ = nullptr;
+
+	Puchun* puchun_ = nullptr;
 
 	bool reel1IsStopped_ = false;
 	bool reel2IsStopped_ = false;

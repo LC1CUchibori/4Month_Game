@@ -56,21 +56,21 @@ void GameScene::Initialize() {
 	// スロットリールの生成
 	reel1_ = new Reel();
 	// スロットリールの初期化
-	reel1_->Initialize(modelReel_, &viewProjection_,lever_);
+	reel1_->Initialize(modelReel_, &viewProjection_, lever_);
 
 	// モデル生成
 	modelReel2_ = Model::CreateFromOBJ("Reel2", true);
 	// スロットリール2の生成
 	reel2_ = new Reel2();
 	// スロットリール2の初期化
-	reel2_->Initialize(modelReel2_, &viewProjection_,lever_);
+	reel2_->Initialize(modelReel2_, &viewProjection_, lever_);
 
 	// モデル生成
 	modelReel3_ = Model::CreateFromOBJ("Reel3", true);
 	// スロットリール3の生成
 	reel3_ = new Reel3();
 	// スロットリー3の初期化
-	reel3_->Initialize(modelReel3_, &viewProjection_,lever_);
+	reel3_->Initialize(modelReel3_, &viewProjection_, lever_);
 
 	// モデル生成
 	modelLeverParts_ = Model::CreateFromOBJ("LeverParts", true);
@@ -86,21 +86,21 @@ void GameScene::Initialize() {
 	// 左側のボタンの初期化
 	button1_->Initialize(modelButton_, &viewProjection_);
 	// 左側のボタンの位置
-	button1_->SetPosition({-3.0f, 0.0f, 0.0f});
+	button1_->SetPosition({ -3.0f, 0.0f, 0.0f });
 
 	// 真ん中のボタンの生成
 	button2_ = new Button();
 	// 真ん中のボタンの初期化
 	button2_->Initialize(modelButton_, &viewProjection_);
 	// 真ん中のボタンの位置
-	button2_->SetPosition({0.5f, 0.0f, 0.0f});
-	
+	button2_->SetPosition({ 0.5f, 0.0f, 0.0f });
+
 	// 右側のボタン生成
 	button3_ = new Button();
 	// 右側のボタンの初期化
 	button3_->Initialize(modelButton_, &viewProjection_);
 	// 右側のボタンの位置
-	button3_->SetPosition({4.0f, 0.0f, 0.0f});
+	button3_->SetPosition({ 4.0f, 0.0f, 0.0f });
 
 	// モデルの生成
 	modelPushButton_ = Model::CreateFromOBJ("Push", true);
@@ -161,6 +161,12 @@ void GameScene::Initialize() {
 
 	// 音声再生
 	voiceHandle1_ = audio_->PlayWave(SLOT, true);
+
+	std::vector<uint32_t> puchunTextures =
+	{ TextureManager::Load("Puchun/Puchun1.png"), TextureManager::Load("Puchun/Puchun2.png"), TextureManager::Load("Puchun/Puchun3.png"), TextureManager::Load("Puchun/Puchun4.png"),
+		TextureManager::Load("Puchun/Puchun5.png"), TextureManager::Load("Puchun/Puchun6.png"), TextureManager::Load("Puchun/Puchun7.png") };
+	puchun_ = new Puchun();
+	puchun_->Initialize(puchunTextures);
 }
 
 void GameScene::Update() {
@@ -184,13 +190,19 @@ void GameScene::Update() {
 
 	pushButton_->Update();
 
+	puchun_->Update();
+
+	if (input_->TriggerKey(DIK_P)) {
+		puchun_->Start();
+	}
+
 	// 現在の状態を保存
 	static int currentButtonIndex = 0;
 	static int pressCount = 0; // 何回ボタンを押したかを数える変数
 
 #pragma region メダルの処理
 	//投入口にメダル入れる処理
-	if (Input::GetInstance()->IsTriggerMouse(0)) {
+	if (Medal<=2&&Input::GetInstance()->IsTriggerMouse(0)) {
 		//マウスの位置取得
 		Vector2 v = Input::GetInstance()->GetMousePosition();
 
@@ -355,6 +367,8 @@ void GameScene::Draw() {
 	DrawGameCount();
 
 	MedalDraw();
+
+	puchun_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
