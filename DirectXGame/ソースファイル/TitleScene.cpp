@@ -16,7 +16,7 @@ void TitleScene::Initialize() {
 	worldTransfrom_.scale_ = {2, 2, 2};
 
 	//ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("Title.png");
+	textureHandle_ = TextureManager::Load("Title4.png");
 
 	//BGM・SE読み込み
 	//GameStart = audio_->LoadWave("BGM/GameStart.wav");
