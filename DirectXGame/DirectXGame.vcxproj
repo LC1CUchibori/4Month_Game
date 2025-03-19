@@ -110,6 +110,7 @@
     <ClCompile Include="2d\ImGuiManager.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Puchun.cpp" />
     <ClCompile Include="ソースファイル\GameClear.cpp" />
     <ClCompile Include="ソースファイル\GameOver.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="base\StringUtility.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Puchun.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="ヘッダーファイル\GameClear.h" />

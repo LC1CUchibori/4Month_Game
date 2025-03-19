@@ -1,10 +1,16 @@
 ﻿#include "Puchun.h"
 
-void Puchun::Initialize(const std::vector<uint32_t>& textureHandles) {
+void Puchun::Initialize(const std::vector<uint32_t>& textureHandles, Audio* audio) {
 	sprites.clear();
 	for (uint32_t handle : textureHandles) {
 		sprites.push_back(Sprite::Create(handle, {0, 0}));
 	}
+
+	audio_ = audio; // Audioインスタンスを保持
+	if (audio_) {
+		pichunSound_ = audio_->LoadWave("Pichun.wav");
+	}
+
 	currentFrame = 0;
 	time = 0.0f;
 	isPlaying = false;
@@ -19,7 +25,6 @@ void Puchun::Update() {
 			// フレームを進める
 			currentFrame++;
 			if (static_cast<size_t>(currentFrame) >= sprites.size()) { // 最後のフレームに到達
-				// 2 秒間最後のフレームを表示
 				isPlaying = false;
 				isFinishing = true;
 				currentFrame = static_cast<int>(sprites.size()) - 1;
@@ -38,7 +43,6 @@ void Puchun::Update() {
 }
 
 void Puchun::Draw() {
-	// アニメーション中または最後のフレームを表示中なら描画
 	if (isPlaying || isFinishing) {
 		if (currentFrame < sprites.size()) {
 			sprites[currentFrame]->Draw();
@@ -51,6 +55,11 @@ void Puchun::Start() {
 	time = 0.0f;
 	isPlaying = true;
 	isFinishing = false;
+
+	// アニメーション開始時（最初の画像が出たとき）に音を再生
+	if (audio_) {
+		audio_->PlayWave(pichunSound_);
+	}
 }
 
 bool Puchun::IsFinished() const { return !isPlaying && !isFinishing; }

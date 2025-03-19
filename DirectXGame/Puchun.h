@@ -1,13 +1,14 @@
 ﻿#pragma once
 #include <Sprite.h>
 #include <vector>
+#include <Audio.h>
 
 class Puchun {
 public:
 	/// <summary>
 	/// 初期化（7枚のテクスチャを渡す）
 	/// </summary>
-	void Initialize(const std::vector<uint32_t>& textureHandles);
+	void Initialize(const std::vector<uint32_t>& textureHandles, Audio* audio);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -34,7 +35,10 @@ private:
 	int currentFrame = 0;
 	float time = 0.0f;
 	bool isPlaying = false;
-	bool isFinishing = false; // 最後のフレームを表示するためのフラグ
+	bool isFinishing = false;
 	const float frameDuration = 0.0325f;
-	const float lastFrameDuration = 0.5f; // 最後のフレームの表示時間
+	const float lastFrameDuration = 0.65f;
+
+	uint32_t pichunSound_ = 0; // 音のハンドル
+	Audio* audio_ = nullptr;   // Audioシステム
 };

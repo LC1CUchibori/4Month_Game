@@ -166,7 +166,7 @@ void GameScene::Initialize() {
 	{ TextureManager::Load("Puchun/Puchun1.png"), TextureManager::Load("Puchun/Puchun2.png"), TextureManager::Load("Puchun/Puchun3.png"), TextureManager::Load("Puchun/Puchun4.png"),
 		TextureManager::Load("Puchun/Puchun5.png"), TextureManager::Load("Puchun/Puchun6.png"), TextureManager::Load("Puchun/Puchun7.png") };
 	puchun_ = new Puchun();
-	puchun_->Initialize(puchunTextures);
+	puchun_->Initialize(puchunTextures, audio_);
 }
 
 void GameScene::Update() {
@@ -202,7 +202,7 @@ void GameScene::Update() {
 
 #pragma region メダルの処理
 	//投入口にメダル入れる処理
-	if (Medal<=2&&Input::GetInstance()->IsTriggerMouse(0)) {
+	if (Input::GetInstance()->IsTriggerMouse(0)) {
 		//マウスの位置取得
 		Vector2 v = Input::GetInstance()->GetMousePosition();
 
