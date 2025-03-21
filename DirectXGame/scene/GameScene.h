@@ -141,6 +141,11 @@ private: // メンバ変数
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
 
+	// 背景テクスチャハンドル
+	uint32_t BGtextureHandle_ = 0;
+	// 背景スプライト
+	Sprite* BGsprite_ = nullptr;
+
 	//サウンドデータハンドル
 	uint32_t SLOT = 0;
 	uint32_t Click = 0;

@@ -37,6 +37,10 @@ void GameScene::Initialize() {
 	SLOT = audio_->LoadWave("BGM/Slot.wav");
 	Click = audio_->LoadWave("SE/Decision.wav");
 
+	// 背景
+	BGtextureHandle_ = TextureManager::Load("Floor.png");
+	BGsprite_ = Sprite::Create(BGtextureHandle_, {0, 0});
+
 	// モデル生成
 	modelSlot_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの生成
@@ -314,6 +318,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
+	BGsprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
