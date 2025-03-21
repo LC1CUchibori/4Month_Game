@@ -8,7 +8,7 @@ class Lever
 public:
     void Initialize(Model* model, ViewProjection* viewProjection);
 
-    void Update(int &medal, int&gameCont);
+    void Update(int &medal, int&gameCont, bool&isFreePlay);
 
     void Draw();
 

@@ -17,7 +17,7 @@ void Lever::Initialize(Model *model, ViewProjection* viewProjection)
 	viewProjection_ = viewProjection;
 }
 
-void Lever::Update(int &medal,int&gameCount)
+void Lever::Update(int &medal,int&gameCount,bool&isFreePlay)
 {
     // エンターキーが押されたらタイマー開始
     if (medal >= 3 && input_->TriggerKey(DIK_RETURN)) {
@@ -26,7 +26,9 @@ void Lever::Update(int &medal,int&gameCount)
         
         gameCount += 1;
 
-        medal -= 3;
+        if (!isFreePlay) {
+            medal -= 3;
+        }
     }
 
     // タイマーが残っている間は下げる

@@ -179,7 +179,7 @@ void GameScene::Update() {
 	reel3_->Update();
 
 	// レバー
-	lever_->Update(Medal,GameCount);
+	lever_->Update(Medal,GameCount,isFreePlay);
 
 	// ボタン1
 	button1_->Update();
@@ -265,7 +265,17 @@ void GameScene::Update() {
             reel3_->StopRotation();
             reel3IsStopped_ = true; // リール3を停止状態に設定
 			if (lever_->GetStorenum() <= 50) {
-				Medal += 8;  
+				Medal += 8;  // ベル
+			}
+			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
+				Medal += 5;  // スイカ
+			}
+			if (lever_->GetStorenum() >= 51 && lever_->GetStorenum() <=90) {
+				isFreePlay = true; // リプレイ
+			}
+			else
+			{
+				isFreePlay = false;
 			}
         }
 

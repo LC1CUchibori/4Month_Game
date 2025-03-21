@@ -155,4 +155,6 @@ private: // メンバ変数
 	//終了フラグ
 	bool cleared_ = false;
 	bool finished_ = false;
+
+	bool isFreePlay = false;
 };
