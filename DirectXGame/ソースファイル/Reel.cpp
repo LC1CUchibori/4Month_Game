@@ -90,6 +90,18 @@ void Reel::StopRotation()
 		rotationX = 180.0f;
 	}
 
+	if (lever_->GetStorenum() >= 51 && lever_->GetStorenum() <=90) {
+		rotationX = 200.0f;
+	}
+
+	if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
+		rotationX = 321.0f;
+	}
+	if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=97) {
+		rotationX = 128.5f;
+	}
+
+
 	// 0～2πの範囲に正規化
 	rotationX = fmod(rotationX, 2.0f * 3.14159265f);
 
@@ -114,6 +126,9 @@ Reel::Symbol Reel::GetResultSymbol()
 	if (lever_->GetStorenum() <= 50) {
 		rotationX = 180.0f;
 	}
+	/*if (lever_->GetStorenum() >= 51 && lever_->GetStorenum() <=90) {
+	rotationX = 200.0f;
+	}*/
 
 
 	rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);

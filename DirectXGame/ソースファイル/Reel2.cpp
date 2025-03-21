@@ -82,6 +82,17 @@ void Reel2::StopRotation()
 	if (lever_->GetStorenum() <= 50) {
 		rotationX = 137.0f;
 	}
+
+	if (lever_->GetStorenum() >= 51 && lever_->GetStorenum() <=90) {
+		rotationX = 201.0f;
+	}
+
+	if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
+		rotationX = 309.5f;
+	}
+	if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=97) {
+		rotationX = 130.0f;
+	}
 	//if(reel1->GetResultSymbol() == Bell){}
 
 	// 0～2πの範囲に正規化
