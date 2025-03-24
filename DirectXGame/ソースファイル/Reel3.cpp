@@ -81,17 +81,19 @@ void Reel3::StopRotation()
 	if (lever_->GetStorenum() <= 50) {
 		rotationX = 125.0f;
 	}
+	// リプレイ
 	if (lever_->GetStorenum() >= 51 && lever_->GetStorenum() <=90) {
 		rotationX = 199.5f;
 	}
+	// スイカ
 	if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
 		rotationX =279.0f;
 	}
-
+	// 弱チェリー
 	if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=96) {
 		rotationX = 321.0f;
 	}
-
+	// 強チェリー
 	if (lever_->GetStorenum() ==97) {
 		rotationX = 321.5f;
 	}
@@ -119,7 +121,6 @@ Reel3::Symbol Reel3::GetResultSymbol()
 		rotationX = 180.0f;
 
 	}
-
 
 	rotationX = fmod(worldTransform_.rotation_.x, 2.0f * 3.14159265f);
 

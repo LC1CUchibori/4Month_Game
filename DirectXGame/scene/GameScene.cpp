@@ -281,6 +281,14 @@ void GameScene::Update() {
 			{
 				isFreePlay = false;
 			}
+			// 弱チェリー
+			if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=96) {
+				Medal += 2;
+			}
+			// 強チェリー
+			if (lever_->GetStorenum() ==97) {
+				Medal += 2;
+			}
         }
 
 		// 次のボタンへ
