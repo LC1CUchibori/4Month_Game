@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <Vector3.h>
 #include <Model.h>
 class Enemy
@@ -13,9 +13,22 @@ public:
     void Update();
 
     void Draw();
+
+    void SetIsActive(bool active) {
+        // 敵をアクティブにする処理
+        isActive_ = active;
+    }
+
+    int GetIsActive() const { return isActive_; }
+
 private:
-    Vector3 position_;  // �G�̈ʒu
-    Model* model_;      // �G�̃��f��
-    bool isActive_;     // �G���A�N�e�B�u���ǂ���
+
+    // ワールドトランスフォーム
+    WorldTransform worldTransform_;
+    // ビュープロジェクション
+    ViewProjection* viewProjection_ = nullptr;
+    Vector3 position_;  // 敵の位置
+    Model* model_;      // 敵のモデル
+    bool isActive_ = false;     // 敵がアクティブかどうか
 };
 

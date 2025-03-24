@@ -17,6 +17,7 @@
 #include "ヘッダーファイル/Button.h"
 #include "ヘッダーファイル/PushButton.h"
 #include "Puchun.h"
+#include "Enemy.h"
 
 
 /// <summary>
@@ -120,6 +121,13 @@ private: // メンバ変数
 	Slot* MoneyBox_ = nullptr;
 	Model* modelMoneyBox_ = nullptr;
 
+	
+	Enemy* enemy1 = nullptr;  // 敵1
+	Enemy* enemy2 = nullptr;  // 敵2
+	Enemy* enemy3 = nullptr;  // 敵3
+	Enemy* enemy4 = nullptr;  // 敵
+
+
 	Puchun* puchun_ = nullptr;
 
 	bool reel1IsStopped_ = false;
@@ -133,6 +141,10 @@ private: // メンバ変数
 
 	// ゲーム数
 	int gameCount_ = 0;
+
+	// 敵
+	Sprite* enemySprite_[4];
+	uint32_t enemyTextureHandle_[4];
 
 	// 数字
 	Sprite* sprite_[10];

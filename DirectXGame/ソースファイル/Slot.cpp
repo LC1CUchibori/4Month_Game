@@ -29,7 +29,7 @@ void Slot::Draw()
     // メダルカウントボタン
     modelMedalCountButton_->Draw(worldTransform_, *viewProjection_);
     // 投入機
-    modelMoneyBox_->Draw(worldTransform_, *viewProjection_);
+   // modelMoneyBox_->Draw(worldTransform_, *viewProjection_);
 }
 
 bool Slot::CheckHorizontal()

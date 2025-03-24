@@ -2,6 +2,8 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include <cstdlib>
+#include <ctime>   
 
 GameScene::GameScene() {}
 
@@ -15,6 +17,11 @@ GameScene::~GameScene() {
 	delete modelLeverParts_;
 	delete modelLever_;
 	delete modelButton_;
+	delete enemy1;
+	delete enemy2;
+	delete enemy3;
+	delete enemy4;
+
 
 	//音声停止
 	audio_->StopWave(voiceHandle1_);
@@ -126,6 +133,24 @@ void GameScene::Initialize() {
 	MoneyBox_ = new Slot();
 	// 投入機の初期化
 	MoneyBox_->Initialize(modelMoneyBox_, &viewProjection_);
+
+	// 敵のインスタンス化
+	enemy1 = new Enemy();
+	enemy2 = new Enemy();
+	enemy3 = new Enemy();
+	enemy4 = new Enemy();
+
+
+	// 敵生成
+	enemyTextureHandle_[0] = TextureManager::Load("Suraimu.png");
+	enemyTextureHandle_[1] = TextureManager::Load("Mimikku.png");
+	enemyTextureHandle_[2] = TextureManager::Load("Goremu.png");
+	enemyTextureHandle_[3] = TextureManager::Load("Dragon.png");
+	// 敵スプライト
+	enemySprite_[0] = Sprite::Create(enemyTextureHandle_[0], { 0,0 });
+	enemySprite_[1] = Sprite::Create(enemyTextureHandle_[1], { 0,0 });
+	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 0,0 });
+	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 0,0 });
 
 	//画像生成
 	TextureHandle_[0] = TextureManager::Load("0.png");
@@ -268,26 +293,131 @@ void GameScene::Update() {
             button3_->Press();
             reel3_->StopRotation();
             reel3IsStopped_ = true; // リール3を停止状態に設定
+
+			// ベル
 			if (lever_->GetStorenum() <= 50) {
-				Medal += 8;  // ベル
+				Medal += 8;
 			}
-			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
-				Medal += 5;  // スイカ
-			}
+
+			// リプレイ
 			if (lever_->GetStorenum() >= 51 && lever_->GetStorenum() <=90) {
-				isFreePlay = true; // リプレイ
+				isFreePlay = true; 
 			}
 			else
 			{
 				isFreePlay = false;
 			}
+
+			// スイカ
+			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
+				Medal += 5;  
+				if (rand() % 100 < 10) {  // 10%の確率で敵を出現させる
+
+					// 敵の初期化
+					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
+					enemies.push_back(enemy1);
+					enemies.push_back(enemy2);
+					enemies.push_back(enemy3);
+					enemies.push_back(enemy4);
+
+					// 敵の出現確率
+					std::vector<int> probabilities = {15, 30, 45, 60};
+
+					// ランダムで選ばれる敵のインデックスを決定
+					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
+					int cumulative_prob = 0;
+					int selected_enemy_index = -1;
+
+					// 確率に基づいて選ばれる敵を決定
+					for (int i = 0; i < probabilities.size(); ++i) {
+						cumulative_prob += probabilities[i];
+						if (rand_value < cumulative_prob) {
+							selected_enemy_index = i;  // この敵が選ばれる
+							break;
+						}
+					}
+
+					// 選ばれた敵を描画
+					if (selected_enemy_index != -1) {
+						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
+						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
+					}
+
+				}
+			}
+
 			// 弱チェリー
 			if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=96) {
 				Medal += 2;
+				if (rand() % 100 < 10) {  // 10%の確率で敵を出現させる
+					// 敵の初期化
+					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
+					enemies.push_back(enemy1);
+					enemies.push_back(enemy2);
+					enemies.push_back(enemy3);
+					enemies.push_back(enemy4);
+
+					// 敵の出現確率
+					std::vector<int> probabilities = {15, 30, 45, 60};
+
+					// ランダムで選ばれる敵のインデックスを決定
+					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
+					int cumulative_prob = 0;
+					int selected_enemy_index = -1;
+
+					// 確率に基づいて選ばれる敵を決定
+					for (int i = 0; i < probabilities.size(); ++i) {
+						cumulative_prob += probabilities[i];
+						if (rand_value < cumulative_prob) {
+							selected_enemy_index = i;  // この敵が選ばれる
+							break;
+						}
+					}
+
+					// 選ばれた敵を描画
+					if (selected_enemy_index != -1) {
+						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
+						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
+					}
+				}
+
 			}
+
 			// 強チェリー
 			if (lever_->GetStorenum() ==97) {
 				Medal += 2;
+				if (rand() % 100 < 25) {  // 25%の確率で敵を出現させる
+					// 敵の初期化
+					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
+					enemies.push_back(enemy1);
+					enemies.push_back(enemy2);
+					enemies.push_back(enemy3);
+					enemies.push_back(enemy4);
+
+					// 敵の出現確率
+					std::vector<int> probabilities = {15, 30, 45, 60};
+
+					// ランダムで選ばれる敵のインデックスを決定
+					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
+					int cumulative_prob = 0;
+					int selected_enemy_index = -1;
+
+					// 確率に基づいて選ばれる敵を決定
+					for (int i = 0; i < probabilities.size(); ++i) {
+						cumulative_prob += probabilities[i];
+						if (rand_value < cumulative_prob) {
+							selected_enemy_index = i;  // この敵が選ばれる
+							break;
+						}
+					}
+
+					// 選ばれた敵を描画
+					if (selected_enemy_index != -1) {
+						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
+						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
+					}
+				}
+
 			}
         }
 
@@ -362,7 +492,7 @@ void GameScene::Draw() {
 	medalCountButton_->Draw();
 
 	// 投入機
-	MoneyBox_->Draw();
+	//MoneyBox_->Draw();
 
 	// ボタン1
 	button2_->Draw();
@@ -392,6 +522,20 @@ void GameScene::Draw() {
 	MedalDraw();
 
 	puchun_->Draw();
+
+	// 敵が出現している場合は描画
+	if (enemy1->GetIsActive()) {
+		enemy1->Draw();
+	}
+	if (enemy2->GetIsActive()) {
+		enemy2->Draw();
+	}
+	if (enemy3->GetIsActive()) {
+		enemy3->Draw();
+	}
+	if (enemy4->GetIsActive()) {
+		enemy4->Draw();
+	}
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
