@@ -311,7 +311,7 @@ void GameScene::Update() {
 			// スイカ
 			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
 				Medal += 5;  
-				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
+				if (rand() % 100 < 10) {  // 10%の確率で敵を出現させる
 
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
@@ -349,7 +349,7 @@ void GameScene::Update() {
 			// 弱チェリー
 			if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=96) {
 				Medal += 2;
-				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
+				if (rand() % 100 < 10) {  // 10%の確率で敵を出現させる
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
 					enemies.push_back(enemy1);
