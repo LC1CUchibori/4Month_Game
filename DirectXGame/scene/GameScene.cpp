@@ -525,16 +525,16 @@ void GameScene::Draw() {
 
 	// 敵が出現している場合は描画
 	if (enemy1->GetIsActive()) {
-		enemy1->Draw();
+		enemySprite_[0]->Draw();
 	}
 	if (enemy2->GetIsActive()) {
-		enemy2->Draw();
+		enemySprite_[1]->Draw();
 	}
 	if (enemy3->GetIsActive()) {
-		enemy3->Draw();
+		enemySprite_[2]->Draw();
 	}
 	if (enemy4->GetIsActive()) {
-		enemy4->Draw();
+		enemySprite_[3]->Draw();
 	}
 
 	// スプライト描画後処理

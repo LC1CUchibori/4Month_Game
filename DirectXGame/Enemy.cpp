@@ -5,7 +5,6 @@ Enemy::Enemy() : isActive_(false) {}
 
 // デストラクタ
 Enemy::~Enemy() { 
-    delete model_; 
 }
 
 void Enemy::Initialize()
@@ -23,8 +22,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-    if (isActive_) {
-        worldTransform_.translation_ = position_;
-        model_->Draw(worldTransform_, *viewProjection_);
-    }
+	if (isActive_) {
+		sprite_->Draw();
+	}
 }

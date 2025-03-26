@@ -1,6 +1,9 @@
 ﻿#pragma once
 #include <Vector3.h>
 #include <Model.h>
+#include "Sprite.h"
+#include "DirectXCommon.h"
+
 class Enemy
 {
 public:
@@ -28,7 +31,9 @@ private:
     // ビュープロジェクション
     ViewProjection* viewProjection_ = nullptr;
     Vector3 position_;  // 敵の位置
-    Model* model_;      // 敵のモデル
+   
+    //スプライト
+    Sprite* sprite_ = nullptr;
     bool isActive_ = false;     // 敵がアクティブかどうか
 };
 
