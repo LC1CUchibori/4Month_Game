@@ -51,10 +51,11 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	//メダルを徐々に増やす処理
+	void UpdateMedal(float deltaTime);
+
 	//回転数を描画
 	void DrawGameCount();
-
-	void DrawMedalCount();
 
 	//メダルの数を描画
 	void MedalDraw();
@@ -121,7 +122,7 @@ private: // メンバ変数
 	Slot* MoneyBox_ = nullptr;
 	Model* modelMoneyBox_ = nullptr;
 
-	
+
 	Enemy* enemy1 = nullptr;  // 敵1
 	Enemy* enemy2 = nullptr;  // 敵2
 	Enemy* enemy3 = nullptr;  // 敵3
@@ -135,7 +136,16 @@ private: // メンバ変数
 	bool reel3IsStopped_ = false;
 
 	//メダル
-	int Medal = 30;
+	int Medal = 46;
+	//目標メダル
+	int targetMedal = 0;
+	//メダル増加にかかる時間
+	float medalIncrementTime = 0.2f;
+	//経過時間
+	float timeElapsed = 0.0f;
+	//アニメーション
+	bool animating = false;
+
 	//ゲーム数
 	int GameCount = 0;
 
@@ -153,6 +163,11 @@ private: // メンバ変数
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
 
+	// 矢印
+	Sprite *Arrow_ = 0;
+	// テクスチャハンドル
+	uint32_t ArrowHandle_ = 0;
+
 	// 背景テクスチャハンドル
 	uint32_t BGtextureHandle_ = 0;
 	// 背景スプライト
@@ -161,10 +176,14 @@ private: // メンバ変数
 	//サウンドデータハンドル
 	uint32_t SLOT = 0;
 	uint32_t Click = 0;
+	uint32_t Get = 0;
+	uint32_t Retry = 0;
 
 	//音声再生ハンドル
-	uint32_t voiceHandle1_ = 0;
-	uint32_t voiceHandle2_ = 0;
+	uint32_t voiceHandle1_ = 0u;
+	uint32_t voiceHandle2_ = 0u;
+	uint32_t voiceHandle3_ = 0u;
+	uint32_t voiceHandle4_ = 0u;
 
 	//リールを動かせなくするフラグ
 	bool Realflag = false;
