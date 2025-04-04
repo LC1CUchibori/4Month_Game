@@ -596,9 +596,6 @@ void GameScene::Draw() {
 		}
 	}
 
-
-	enemySprite_[3]->Draw();
-
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
