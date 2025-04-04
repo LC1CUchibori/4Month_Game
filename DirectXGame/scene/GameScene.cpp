@@ -150,10 +150,10 @@ void GameScene::Initialize() {
 	enemyTextureHandle_[2] = TextureManager::Load("Goremu.png");
 	enemyTextureHandle_[3] = TextureManager::Load("Dragon.png");
 	// 敵スプライト
-	enemySprite_[0] = Sprite::Create(enemyTextureHandle_[0], { 0,0 });
-	enemySprite_[1] = Sprite::Create(enemyTextureHandle_[1], { 0,0 });
-	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 0,0 });
-	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 0,0 });
+	enemySprite_[0] = Sprite::Create(enemyTextureHandle_[0], { 300,150 });
+	enemySprite_[1] = Sprite::Create(enemyTextureHandle_[1], { 300,150 });
+	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 540,150 });
+	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 540,150 });
 
 	//画像生成
 	TextureHandle_[0] = TextureManager::Load("UI/0.png");
@@ -595,6 +595,10 @@ void GameScene::Draw() {
 			enemySprite_[3]->Draw();
 		}
 	}
+
+	enemySprite_[0]->Draw();
+
+	enemySprite_[1]->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
