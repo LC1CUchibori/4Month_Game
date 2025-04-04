@@ -79,7 +79,7 @@ void Reel2::StopRotation()
 	float& rotationX = worldTransform_.rotation_.x;
 
 	// ベルが揃う
-	if (lever_->GetStorenum() <= 50) {
+	if (lever_->GetStorenum() <= 30) {
 		rotationX = 137.0f;
 	}
 
@@ -87,7 +87,7 @@ void Reel2::StopRotation()
 		rotationX = 201.0f;
 	}
 
-	if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
+	if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=97) {
 		rotationX = 309.5f;
 	}
 	if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=97) {

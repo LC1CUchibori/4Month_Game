@@ -196,7 +196,7 @@ void GameScene::Initialize() {
 	Arrow_ = Sprite::Create(ArrowHandle_, { 480, 380 });
 
 	// 音声再生
-	voiceHandle1_ = audio_->PlayWave(SLOT, true);
+	//voiceHandle1_ = audio_->PlayWave(SLOT, true);
 
 	std::vector<uint32_t> puchunTextures =
 	{ TextureManager::Load("Puchun/Puchun1.png"), TextureManager::Load("Puchun/Puchun2.png"), TextureManager::Load("Puchun/Puchun3.png"), TextureManager::Load("Puchun/Puchun4.png"),
@@ -304,7 +304,7 @@ void GameScene::Update() {
 			reel3IsStopped_ = true; // リール3を停止状態に設定
 
 			// ベル
-			if (lever_->GetStorenum() <= 50) {
+			if (lever_->GetStorenum() <= 30) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal += Medal + 7;
 				animating = true;
@@ -321,11 +321,11 @@ void GameScene::Update() {
 			}
 
 			// スイカ
-			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
+			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=97) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal += Medal + 5;
 				animating = true;
-				if (rand() % 100 < 10) {  // 10%の確率で敵を出現させる
+				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
 
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
@@ -355,8 +355,15 @@ void GameScene::Update() {
 					if (selected_enemy_index != -1) {
 						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
 						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
+						isEnemyActive = true;
 					}
 
+					// 敵を倒す抽選 (スイカ)
+					if (isEnemyActive==true && rand() % 100 < 50) {  // 50%の確率で敵を倒せる
+						isEnemyActive = false;
+						enemies[selected_enemy_index]->SetIsActive(false);
+						
+					}	
 				}
 			}
 
@@ -394,6 +401,7 @@ void GameScene::Update() {
 					if (selected_enemy_index != -1) {
 						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
 						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
+						isEnemyActive = true;
 					}
 				}
 
@@ -433,10 +441,36 @@ void GameScene::Update() {
 					if (selected_enemy_index != -1) {
 						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
 						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
+						isEnemyActive = true;
+					}
+
+					// 敵を倒す抽選 (強チェリー)
+					if (isEnemyActive && rand() % 100 < 80) {  // 80%の確率で敵を倒せる
+						isEnemyActive = false;
+						enemies[selected_enemy_index]->SetIsActive(false);
+					}
+
+					// 敵を倒す抽選 (弱チェリー)
+					if (isEnemyActive && rand() % 100 < 30) {  // 30%の確率で敵を倒せる
+						isEnemyActive = false;
+						enemies[selected_enemy_index]->SetIsActive(false);
 					}
 				}
-
 			}
+		}
+
+		// ゲームカウントが10回に達したら、敵が逃げる
+		if (isEnemyActive && gameCount >= 10) {
+			// 敵が逃げる処理
+			//activeEnemy->SetIsActive(false);  // 敵を非アクティブにする
+			isEnemyActive = false;
+
+			activeEnemy = nullptr;  // 敵をリセット
+		}
+
+		// ゲームカウントを進める
+		if (isEnemyActive && !enemyDefeated) {
+			gameCount++;
 		}
 
 		// 次のボタンへ
@@ -455,7 +489,7 @@ void GameScene::Update() {
 #pragma region 勝つ・負ける条件の処理
 
 	//メダルの数が一定数超えたらクリア
-	if (Medal >= 100) {
+	if (Medal >= 1000) {
 		cleared_ = true;
 	}
 
@@ -546,18 +580,20 @@ void GameScene::Draw() {
 
 	puchun_->Draw();
 
-	// 敵が出現している場合は描画
-	if (enemy1->GetIsActive()) {
-		enemySprite_[0]->Draw();
-	}
-	if (enemy2->GetIsActive()) {
-		enemySprite_[1]->Draw();
-	}
-	if (enemy3->GetIsActive()) {
-		enemySprite_[2]->Draw();
-	}
-	if (enemy4->GetIsActive()) {
-		enemySprite_[3]->Draw();
+	if (isEnemyActive == true) {
+		// 敵が出現している場合は描画
+		if (enemy1->GetIsActive()) {
+			enemySprite_[0]->Draw();
+		}
+		if (enemy2->GetIsActive()) {
+			enemySprite_[1]->Draw();
+		}
+		if (enemy3->GetIsActive()) {
+			enemySprite_[2]->Draw();
+		}
+		if (enemy4->GetIsActive()) {
+			enemySprite_[3]->Draw();
+		}
 	}
 
 	// スプライト描画後処理

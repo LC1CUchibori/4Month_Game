@@ -78,7 +78,7 @@ void Reel3::StopRotation()
 	float& rotationX = worldTransform_.rotation_.x;
 
 	// ベルが揃う
-	if (lever_->GetStorenum() <= 50) {
+	if (lever_->GetStorenum() <= 30) {
 		rotationX = 125.0f;
 	}
 	// リプレイ
@@ -86,7 +86,7 @@ void Reel3::StopRotation()
 		rotationX = 199.5f;
 	}
 	// スイカ
-	if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
+	if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=97) {
 		rotationX =279.0f;
 	}
 	// 弱チェリー

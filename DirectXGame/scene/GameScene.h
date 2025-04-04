@@ -193,4 +193,9 @@ private: // メンバ変数
 	bool finished_ = false;
 
 	bool isFreePlay = false;
+
+	int gameCount = 0;
+	bool isEnemyActive = false;  // 敵が出現したかどうか
+	Enemy* activeEnemy = nullptr;  // 現在アクティブな敵
+	bool enemyDefeated = false;   // 敵が倒されたかどうか
 };
