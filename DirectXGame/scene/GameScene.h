@@ -185,6 +185,12 @@ private: // メンバ変数
 	uint32_t voiceHandle3_ = 0u;
 	uint32_t voiceHandle4_ = 0u;
 
+	// 説明
+	uint32_t RuleTextureHandle_ = 0;
+	Sprite* RuleSprite_ = nullptr;
+
+	bool isRule = false; // 最初は非表示
+
 	//リールを動かせなくするフラグ
 	bool Realflag = false;
 

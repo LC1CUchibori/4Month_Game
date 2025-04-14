@@ -51,6 +51,10 @@ void GameScene::Initialize() {
 	BGtextureHandle_ = TextureManager::Load("BG.png");
 	BGsprite_ = Sprite::Create(BGtextureHandle_, {0, 0});
 
+	// 説明
+	RuleTextureHandle_ = TextureManager::Load("Rule.png");
+	RuleSprite_ = Sprite::Create(RuleTextureHandle_, { 140,105 });
+
 	// モデル生成
 	modelSlot_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの生成
@@ -233,6 +237,8 @@ void GameScene::Update() {
 	if (input_->TriggerKey(DIK_P)) {
 		puchun_->Start();
 	}
+
+	
 
 	// 現在の状態を保存
 	static int currentButtonIndex = 0;
@@ -594,6 +600,13 @@ void GameScene::Draw() {
 		if (enemy4->GetIsActive()) {
 			enemySprite_[3]->Draw();
 		}
+	}
+
+	if (input_->TriggerKey(DIK_E)) {
+		isRule = !isRule; // トグル（反転）
+	}
+	if (isRule) {
+		RuleSprite_->Draw(); // 表示
 	}
 
 	// スプライト描画後処理
