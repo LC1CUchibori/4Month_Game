@@ -238,8 +238,6 @@ void GameScene::Update() {
 		puchun_->Start();
 	}
 
-	
-
 	// 現在の状態を保存
 	static int currentButtonIndex = 0;
 	static int pressCount = 0; // 何回ボタンを押したかを数える変数
