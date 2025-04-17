@@ -22,7 +22,7 @@ void Lever::Update(int &medal,int&gameCount,bool&isFreePlay)
     // エンターキーが押されたらタイマー開始
     if (medal >= 3 && input_->TriggerKey(DIK_RETURN)) {
         downTimer_ = DownTime;
-        storenum = rng.GetRandamNumber(1,300);
+        storenum = rng.GetRandamNumber(97,97);
         
         gameCount += 1;
 

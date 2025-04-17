@@ -51,6 +51,10 @@ void GameScene::Initialize() {
 	BGtextureHandle_ = TextureManager::Load("BG.png");
 	BGsprite_ = Sprite::Create(BGtextureHandle_, {0, 0});
 
+	// スロット内の背景
+	DanjonBGtextureHandle_ = TextureManager::Load("DanjonBG.png");
+	DanjonBGSprite = Sprite::Create(DanjonBGtextureHandle_, { 140,-80 });
+
 	// 説明
 	RuleTextureHandle_ = TextureManager::Load("Rule.png");
 	RuleSprite_ = Sprite::Create(RuleTextureHandle_, { 140,105 });
@@ -141,12 +145,19 @@ void GameScene::Initialize() {
 	// 投入機の初期化
 	MoneyBox_->Initialize(modelMoneyBox_, &viewProjection_);
 
+	// プレイヤーのインスタンス化
+	player = new Player();
+
+	// プレイヤー生成
+	playerTextureHandle_ = TextureManager::Load("Yuusha.png");
+	// プレイヤースプライト
+	playerSprite_ = Sprite::Create(playerTextureHandle_, { 340,35 });
+
 	// 敵のインスタンス化
 	enemy1 = new Enemy();
 	enemy2 = new Enemy();
 	enemy3 = new Enemy();
 	enemy4 = new Enemy();
-
 
 	// 敵生成
 	enemyTextureHandle_[0] = TextureManager::Load("Suraimu.png");
@@ -154,10 +165,10 @@ void GameScene::Initialize() {
 	enemyTextureHandle_[2] = TextureManager::Load("Goremu.png");
 	enemyTextureHandle_[3] = TextureManager::Load("Dragon.png");
 	// 敵スプライト
-	enemySprite_[0] = Sprite::Create(enemyTextureHandle_[0], { 400,25 });
-	enemySprite_[1] = Sprite::Create(enemyTextureHandle_[1], { 400,25 });
-	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 380,10 });
-	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 390,-10 });
+	enemySprite_[0] = Sprite::Create(enemyTextureHandle_[0], { 450,30 });
+	enemySprite_[1] = Sprite::Create(enemyTextureHandle_[1], { 450,30 });
+	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 420,-15 });
+	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 435,-38 });
 
 	//画像生成
 	TextureHandle_[0] = TextureManager::Load("UI/0.png");
@@ -416,7 +427,7 @@ void GameScene::Update() {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal += Medal + 2;
 				animating = true;
-				if (rand() % 100 < 25) {  // 25%の確率で敵を出現させる
+				if (rand() % 100 < 100) {  // 25%の確率で敵を出現させる
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
 					enemies.push_back(enemy1);
@@ -513,7 +524,11 @@ void GameScene::Draw() {
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
 
+	// 背景
 	BGsprite_->Draw();
+
+	// スロット内の背景
+	DanjonBGSprite->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -583,6 +598,8 @@ void GameScene::Draw() {
 	Arrow_->Draw();
 
 	puchun_->Draw();
+
+	playerSprite_->Draw();
 
 	if (isEnemyActive == true) {
 		// 敵が出現している場合は描画

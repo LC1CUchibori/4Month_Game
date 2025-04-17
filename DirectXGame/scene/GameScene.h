@@ -18,6 +18,7 @@
 #include "ヘッダーファイル/PushButton.h"
 #include "Puchun.h"
 #include "Enemy.h"
+#include "Player.h"
 
 
 /// <summary>
@@ -122,11 +123,13 @@ private: // メンバ変数
 	Slot* MoneyBox_ = nullptr;
 	Model* modelMoneyBox_ = nullptr;
 
+	// プレイヤー
+	Player* player = nullptr;
 
 	Enemy* enemy1 = nullptr;  // 敵1
 	Enemy* enemy2 = nullptr;  // 敵2
 	Enemy* enemy3 = nullptr;  // 敵3
-	Enemy* enemy4 = nullptr;  // 敵
+	Enemy* enemy4 = nullptr;  // 敵4
 
 
 	Puchun* puchun_ = nullptr;
@@ -152,6 +155,10 @@ private: // メンバ変数
 	// ゲーム数
 	int gameCount_ = 0;
 
+	// プレイヤー
+	Sprite* playerSprite_ = nullptr;
+	uint32_t playerTextureHandle_ = 0;
+
 	// 敵
 	Sprite* enemySprite_[4];
 	uint32_t enemyTextureHandle_[4];
@@ -172,6 +179,11 @@ private: // メンバ変数
 	uint32_t BGtextureHandle_ = 0;
 	// 背景スプライト
 	Sprite* BGsprite_ = nullptr;
+
+	// スロット内の背景スプライト
+	Sprite* DanjonBGSprite = nullptr;
+	// スロット内の背景テクスチャハンドル
+	uint32_t DanjonBGtextureHandle_ = 0;
 
 	//サウンドデータハンドル
 	uint32_t SLOT = 0;
