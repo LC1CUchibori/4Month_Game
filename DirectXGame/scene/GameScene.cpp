@@ -22,7 +22,10 @@ GameScene::~GameScene() {
 	delete enemy2;
 	delete enemy3;
 	delete enemy4;
-
+	for (Coin* coin : coins_) {
+		delete coin;
+	}
+	coins_.clear();
 
 	//音声停止
 	audio_->StopWave(voiceHandle1_);
@@ -46,6 +49,7 @@ void GameScene::Initialize() {
 	Click = audio_->LoadWave("SE/Decision.wav");
 	Get = audio_->LoadWave("SE/Get.wav");
 	Retry = audio_->LoadWave("SE/Retry.wav");
+	DropCoinSE_ = audio_->LoadWave("SE/DropCoin.wav");
 
 	// 背景
 	BGtextureHandle_ = TextureManager::Load("BG.png");
@@ -213,6 +217,9 @@ void GameScene::Initialize() {
 	// 音声再生
 	//voiceHandle1_ = audio_->PlayWave(SLOT, true);
 
+	//背景コインモデル生成
+	modelCoin_ = Model::CreateFromOBJ("coin", true);
+
 	std::vector<uint32_t> puchunTextures =
 	{ TextureManager::Load("Puchun/Puchun1.png"), TextureManager::Load("Puchun/Puchun2.png"), TextureManager::Load("Puchun/Puchun3.png"), TextureManager::Load("Puchun/Puchun4.png"),
 		TextureManager::Load("Puchun/Puchun5.png"), TextureManager::Load("Puchun/Puchun6.png"), TextureManager::Load("Puchun/Puchun7.png") };
@@ -246,6 +253,26 @@ void GameScene::Update() {
 	player->Update();
 
 	UpdateMedal(0.02f);
+
+	//背景コイン
+	for (auto it = coins_.begin(); it != coins_.end();) {
+		Coin* coin = *it;
+		coin->Update();
+
+		if (coin->IsDead()) {
+			delete coin;
+			it = coins_.erase(it); // リストから削除してイテレータ更新
+
+			coinsDeletedCount_++; // カウント増やす！
+
+			if (coinsDeletedCount_ % 10 == 0) {
+				audio_->PlayWave(DropCoinSE_, false);
+			}
+
+		} else {
+			++it;
+		}
+	}
 
 	if (input_->TriggerKey(DIK_P)) {
 		puchun_->Start();
@@ -552,6 +579,11 @@ void GameScene::Draw() {
 	// スロット鏡台
 	slot_->Draw();
 
+	//背景コイン
+	for (Coin* coin : coins_) {
+		coin->Draw();
+	}
+
 	// スロットリール1
 	reel1_->Draw();
 	// スロットリール2
@@ -645,6 +677,8 @@ void GameScene::UpdateMedal(float deltaTime) {
 			timeElapsed = 0.0f; // 経過時間をリセット
 			if (Medal < targetMedal) {
 				Medal++; // メダルを1増加
+				// コインを1個ずつ出す
+				SpawnCoins(1);
 			}
 			else {
 				targetMedal = 0;
@@ -708,5 +742,15 @@ void GameScene::MedalDraw() {
 			sprite_[i]->Draw(); // 描画
 		}
 		x += spacing; // 画像の間隔
+	}
+}
+
+void GameScene::SpawnCoins(int count) {
+	for (int i = 0; i < count; ++i) {
+		Coin* coin = new Coin();
+		coin->Initialize(modelCoin_, &viewProjection_);
+		coin->SetRandomBehavior();
+		coin->SetAudio(audio_, DropCoinSE_);
+		coins_.push_back(coin);
 	}
 }

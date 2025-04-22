@@ -19,7 +19,7 @@
 #include "Puchun.h"
 #include "Enemy.h"
 #include "Player.h"
-
+#include <Coin.h>
 
 /// <summary>
 /// ゲームシーン
@@ -66,6 +66,8 @@ public: // メンバ関数
 
 	//デスフラグのgetter
 	bool IsDead() const { return finished_; }
+
+	void SpawnCoins(int count);
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -122,6 +124,12 @@ private: // メンバ変数
 	// 投入機
 	Slot* MoneyBox_ = nullptr;
 	Model* modelMoneyBox_ = nullptr;
+
+	//背景メダルモデル
+	Model* modelCoin_ = nullptr;
+	std::list<Coin*> coins_;
+	//背景メダルSE
+	uint32_t medalFinishSE_ = 0;
 
 	// プレイヤー
 	Player* player = nullptr;
@@ -190,12 +198,14 @@ private: // メンバ変数
 	uint32_t Click = 0;
 	uint32_t Get = 0;
 	uint32_t Retry = 0;
+	uint32_t DropCoinSE_ = 0;
 
 	//音声再生ハンドル
 	uint32_t voiceHandle1_ = 0u;
 	uint32_t voiceHandle2_ = 0u;
 	uint32_t voiceHandle3_ = 0u;
 	uint32_t voiceHandle4_ = 0u;
+	uint32_t voiceHandleCoin_ = 0;
 
 	// 説明
 	uint32_t RuleTextureHandle_ = 0;
@@ -216,4 +226,6 @@ private: // メンバ変数
 	bool isEnemyActive = false;  // 敵が出現したかどうか
 	Enemy* activeEnemy = nullptr;  // 現在アクティブな敵
 	bool enemyDefeated = false;   // 敵が倒されたかどうか
+
+	int coinsDeletedCount_ = 0; // 消えたコインの数をカウント
 };
