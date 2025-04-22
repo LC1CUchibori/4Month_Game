@@ -262,13 +262,10 @@ void GameScene::Update() {
 		Vector2 v = Input::GetInstance()->GetMousePosition();
 
 		//緑の投入口の判定処理
-		/*if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455) {
-			Medal += 1;
-		}*/
-
-		if (Medal == 0 && input_->TriggerKey(DIK_M)) {
+		if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455) {
 			Medal += 46;
 		}
+
 
 		//メダルが3枚の時にレールを回す処理
 		if (Medal >= 3) {			
@@ -276,6 +273,8 @@ void GameScene::Update() {
 		}
 	}
 #pragma endregion
+
+	
 
 #pragma region レバーの処理
 	// レバーが引かれていたらリール回転開始
