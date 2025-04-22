@@ -151,7 +151,6 @@ void GameScene::Initialize() {
 
 	// プレイヤーのインスタンス化
 	player = new Player();
-
 	// プレイヤー生成
 	playerTextureHandle_ = TextureManager::Load("Yuusha.png");
 	// プレイヤースプライト
