@@ -14,13 +14,9 @@ public:
     void Draw();
 
 private:
-    // ワールドトランスフォーム
     WorldTransform worldTransform_;
-    // ビュープロジェクション
     ViewProjection* viewProjection_ = nullptr;
-    Vector3 position_;  // 敵の位置
-
-    //スプライト
+    Vector2 position_;
     Sprite* sprite_ = nullptr;
 };
 
