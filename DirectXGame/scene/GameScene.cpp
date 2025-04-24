@@ -63,6 +63,10 @@ void GameScene::Initialize() {
 	RuleTextureHandle_ = TextureManager::Load("Rule.png");
 	RuleSprite_ = Sprite::Create(RuleTextureHandle_, { 140,105 });
 
+	// 説明2
+	Rule2TextureHandle_ = TextureManager::Load("Rule2.png");
+	Rule2Sprite_ = Sprite::Create(Rule2TextureHandle_, { 850,370 });
+
 	// モデル生成
 	modelSlot_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの生成
@@ -659,6 +663,8 @@ void GameScene::Draw() {
 	if (isRule) {
 		RuleSprite_->Draw(); // 表示
 	}
+
+	Rule2Sprite_->Draw(); // 表示
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

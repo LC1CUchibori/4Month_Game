@@ -211,6 +211,10 @@ private: // メンバ変数
 	uint32_t RuleTextureHandle_ = 0;
 	Sprite* RuleSprite_ = nullptr;
 
+	// 説明2
+	uint32_t Rule2TextureHandle_ = 0;
+	Sprite* Rule2Sprite_ = nullptr;
+
 	bool isRule = false; // 最初は非表示
 
 	//リールを動かせなくするフラグ
