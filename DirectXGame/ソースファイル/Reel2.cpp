@@ -62,6 +62,10 @@ void Reel2::Update()
 		}
 	}
 
+	// リールが回っているのを覚える
+	lever_->SetReel2(isRotating_);
+
+
 	// ワールドトランスフォームの更新
 	worldTransform_.UpdateMatrix();
 }

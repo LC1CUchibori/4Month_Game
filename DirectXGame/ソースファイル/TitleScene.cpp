@@ -4,6 +4,9 @@
 
 TitleScene::~TitleScene() { 
 	delete sprite_;
+
+	// 音源停止
+	audio_->StopWave(voiceHandle1_);
 }
 
 void TitleScene::Initialize() {
@@ -19,13 +22,14 @@ void TitleScene::Initialize() {
 	textureHandle_ = TextureManager::Load("Title4.png");
 
 	//BGM・SE読み込み
-	//GameStart = audio_->LoadWave("BGM/GameStart.wav");
+	GameStart = audio_->LoadWave("BGM/GameStart.wav");
+	Decision = audio_->LoadWave("SE/Decision.wav");
 
 	//スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, {0, 0});
 
 	//音声再生
-	//voiceHandle_ = audio_->PlayWave(GameStart, true);
+	voiceHandle1_ = audio_->PlayWave(GameStart, true);
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -46,5 +50,10 @@ void TitleScene::Draw() {
 	Sprite::PostDraw();
 	//深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
+}
+
+void TitleScene::LoadMusic() { 
+	//音声再生
+	voiceHandle2_ = audio_->PlayWave(Decision, false);
 }
 

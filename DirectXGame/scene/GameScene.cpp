@@ -63,9 +63,9 @@ void GameScene::Initialize() {
 	RuleTextureHandle_ = TextureManager::Load("Rule.png");
 	RuleSprite_ = Sprite::Create(RuleTextureHandle_, { 140,105 });
 
-	// 説明2
-	Rule2TextureHandle_ = TextureManager::Load("Rule2.png");
-	Rule2Sprite_ = Sprite::Create(Rule2TextureHandle_, { 850,370 });
+	// 操作説明
+	OperationtextureHandle_ = TextureManager::Load("UI/Operation.png");
+	OperationSprite_ = Sprite::Create(OperationtextureHandle_, { 0, 0 });
 
 	// モデル生成
 	modelSlot_ = Model::CreateFromOBJ("Slot", true);
@@ -371,7 +371,7 @@ void GameScene::Update() {
 			}
 
 			// スイカ
-			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=97) {
+			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal += Medal + 5;
 				animating = true;
@@ -385,7 +385,7 @@ void GameScene::Update() {
 					enemies.push_back(enemy4);
 
 					// 敵の出現確率
-					std::vector<int> probabilities = {15, 30, 45, 60};
+					std::vector<int> probabilities = {10, 20, 30, 40};
 
 					// ランダムで選ばれる敵のインデックスを決定
 					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
@@ -409,11 +409,20 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (スイカ)
-					if (isEnemyActive==true && rand() % 100 < 50) {  // 50%の確率で敵を倒せる
+					if (isEnemyActive==true && rand() % 100 < 50 && mode == 1) {  // 50%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
 						
 					}	
+					if (mode ==0)
+					{
+						mode = 1;
+					}
+					else if(mode ==1){
+						mode = 0;
+					}
+
+
 				}
 			}
 
@@ -422,7 +431,7 @@ void GameScene::Update() {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal += Medal + 2;
 				animating = true;
-				if (rand() % 100 < 10) {  // 10%の確率で敵を出現させる
+				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
 					enemies.push_back(enemy1);
@@ -431,7 +440,7 @@ void GameScene::Update() {
 					enemies.push_back(enemy4);
 
 					// 敵の出現確率
-					std::vector<int> probabilities = {15, 30, 45, 60};
+					std::vector<int> probabilities = {10, 20, 30, 40};
 
 					// ランダムで選ばれる敵のインデックスを決定
 					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
@@ -453,6 +462,20 @@ void GameScene::Update() {
 						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
 						isEnemyActive = true;
 					}
+
+					// 敵を倒す抽選 (弱チェリー)
+					if (isEnemyActive && rand() % 100 < 30 && mode == 1) {  // 30%の確率で敵を倒せる
+						isEnemyActive = false;
+						enemies[selected_enemy_index]->SetIsActive(false);
+					}
+
+					if (mode ==0)
+					{
+						mode = 1;
+					}
+					else if(mode ==1){
+						mode = 0;
+					}
 				}
 
 			}
@@ -471,7 +494,7 @@ void GameScene::Update() {
 					enemies.push_back(enemy4);
 
 					// 敵の出現確率
-					std::vector<int> probabilities = {15, 30, 45, 60};
+					std::vector<int> probabilities = {10, 20, 30, 40};
 
 					// ランダムで選ばれる敵のインデックスを決定
 					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
@@ -495,28 +518,30 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (強チェリー)
-					if (isEnemyActive && rand() % 100 < 80) {  // 80%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 80 && mode == 1) {  // 80%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
 					}
 
-					// 敵を倒す抽選 (弱チェリー)
-					if (isEnemyActive && rand() % 100 < 30) {  // 30%の確率で敵を倒せる
-						isEnemyActive = false;
-						enemies[selected_enemy_index]->SetIsActive(false);
+					if (mode ==0)
+					{
+						mode = 1;
+					}
+					else if(mode ==1){
+						mode = 0;
 					}
 				}
 			}
 		}
 
 		// ゲームカウントが10回に達したら、敵が逃げる
-		if (isEnemyActive && gameCount >= 10) {
-			// 敵が逃げる処理
-			//activeEnemy->SetIsActive(false);  // 敵を非アクティブにする
-			isEnemyActive = false;
+		//if (isEnemyActive && gameCount >= 10) {
+		//	// 敵が逃げる処理
+		//	//activeEnemy->SetIsActive(false);  // 敵を非アクティブにする
+		//	isEnemyActive = false;
 
-			activeEnemy = nullptr;  // 敵をリセット
-		}
+		//	activeEnemy = nullptr;  // 敵をリセット
+		//}
 
 		// ゲームカウントを進める
 		if (isEnemyActive && !enemyDefeated) {
@@ -646,25 +671,28 @@ void GameScene::Draw() {
 		if (enemy1->GetIsActive()) {
 			enemySprite_[0]->Draw();
 		}
-		if (enemy2->GetIsActive()) {
+		else if (enemy2->GetIsActive()) {
 			enemySprite_[1]->Draw();
 		}
-		if (enemy3->GetIsActive()) {
+		else if (enemy3->GetIsActive()) {
 			enemySprite_[2]->Draw();
 		}
-		if (enemy4->GetIsActive()) {
+		else if (enemy4->GetIsActive()) {
 			enemySprite_[3]->Draw();
 		}
 	}
 
 	if (input_->TriggerKey(DIK_E)) {
+		// 音声再生
+		voiceHandle5_ = audio_->PlayWave(Click, false);
 		isRule = !isRule; // トグル（反転）
 	}
 	if (isRule) {
 		RuleSprite_->Draw(); // 表示
 	}
 
-	Rule2Sprite_->Draw(); // 表示
+	// 操作説明描画
+	OperationSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

@@ -195,25 +195,28 @@ private: // メンバ変数
 
 	//サウンドデータハンドル
 	uint32_t SLOT = 0;
-	uint32_t Click = 0;
+	uint32_t Push = 0;
 	uint32_t Get = 0;
 	uint32_t Retry = 0;
 	uint32_t DropCoinSE_ = 0;
+	uint32_t Click = 0;
 
 	//音声再生ハンドル
 	uint32_t voiceHandle1_ = 0u;
 	uint32_t voiceHandle2_ = 0u;
 	uint32_t voiceHandle3_ = 0u;
 	uint32_t voiceHandle4_ = 0u;
+	uint32_t voiceHandle5_ = 0u;
 	uint32_t voiceHandleCoin_ = 0;
 
 	// 説明
 	uint32_t RuleTextureHandle_ = 0;
 	Sprite* RuleSprite_ = nullptr;
 
-	// 説明2
-	uint32_t Rule2TextureHandle_ = 0;
-	Sprite* Rule2Sprite_ = nullptr;
+	// 操作説明のスプライト
+	Sprite* OperationSprite_ = nullptr;
+	// 操作説明テクスチャハンドル
+	uint32_t OperationtextureHandle_ = 0;
 
 	bool isRule = false; // 最初は非表示
 
@@ -232,4 +235,6 @@ private: // メンバ変数
 	bool enemyDefeated = false;   // 敵が倒されたかどうか
 
 	int coinsDeletedCount_ = 0; // 消えたコインの数をカウント
+
+	int mode = 0;
 };

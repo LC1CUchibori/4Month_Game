@@ -19,6 +19,15 @@ public:
 
     int GetStorenum(){return storenum;}
 
+    // リール1の記憶フラグ
+    void SetReel1(bool isRotating) { this->isRotating1_ = isRotating; }
+
+    // リール2の記憶フラグ
+    void SetReel2(bool isRotating) { this->isRotating2_ = isRotating; }
+
+    // リール3の記憶フラグ
+    void SetReel3(bool isRotating) { this->isRotating3_ = isRotating; }
+
 private:
     Audio *audio_ = nullptr;
 
@@ -47,6 +56,15 @@ private:
 
 
     int storenum = rng.GetRandamNumber(0,300);
+
+    // リール1フラグ
+    bool isRotating1_ = false;
+
+    //　リール2フラグ
+    bool isRotating2_ = false;
+
+    // リール3フラグ
+    bool isRotating3_ = false;
 };
 
 

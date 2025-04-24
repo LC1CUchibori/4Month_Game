@@ -16,6 +16,8 @@ public:
 
 	void Draw();
 
+	void LoadMusic();
+
 private:
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -36,7 +38,9 @@ private:
 
 	//サウンドデータハンドル
 	uint32_t GameStart = 0;
+	uint32_t Decision = 0;
 
 	//音声再生ハンドル
-	uint32_t voiceHandle_ = 0;
+	uint32_t voiceHandle1_ = 0u;
+	uint32_t voiceHandle2_ = 0u;
 };
