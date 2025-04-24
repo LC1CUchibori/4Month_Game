@@ -69,6 +69,8 @@ public: // メンバ関数
 
 	void SpawnCoins(int count);
 
+	int Getmode() { return mode_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -236,5 +238,5 @@ private: // メンバ変数
 
 	int coinsDeletedCount_ = 0; // 消えたコインの数をカウント
 
-	int mode = 0;
+	int mode_ = 0;
 };

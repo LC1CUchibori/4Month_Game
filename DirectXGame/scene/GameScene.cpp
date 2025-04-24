@@ -79,7 +79,7 @@ void GameScene::Initialize() {
 	// レバーの生成
 	lever_ = new Lever();
 	// レバーの初期化
-	lever_->Initialize(modelLever_, &viewProjection_);
+	lever_->Initialize(modelLever_, &viewProjection_,this);
 
 	// モデル生成
 	modelReel_ = Model::CreateFromOBJ("Reel", true);
@@ -409,17 +409,15 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (スイカ)
-					if (isEnemyActive==true && rand() % 100 < 50 && mode == 1) {  // 50%の確率で敵を倒せる
+					if (isEnemyActive==true && rand() % 100 < 50 && mode_ == 1) {  // 50%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
-						
+						mode_ = 0;
+						Medal += 50;
 					}	
-					if (mode ==0)
-					{
-						mode = 1;
-					}
-					else if(mode ==1){
-						mode = 0;
+					
+					else if(mode_ ==0){
+						mode_ = 1;
 					}
 
 
@@ -464,17 +462,15 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (弱チェリー)
-					if (isEnemyActive && rand() % 100 < 30 && mode == 1) {  // 30%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 30 && mode_ == 1) {  // 30%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
+						mode_ = 0;
+						Medal += 50;
 					}
 
-					if (mode ==0)
-					{
-						mode = 1;
-					}
-					else if(mode ==1){
-						mode = 0;
+					else if(mode_ ==0){
+						mode_ = 1;
 					}
 				}
 
@@ -518,17 +514,15 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (強チェリー)
-					if (isEnemyActive && rand() % 100 < 80 && mode == 1) {  // 80%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 80 && mode_ == 1) {  // 80%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
+						mode_ = 0;
+						Medal += 50;
 					}
 
-					if (mode ==0)
-					{
-						mode = 1;
-					}
-					else if(mode ==1){
-						mode = 0;
+					else if(mode_ ==0){
+						mode_ = 1;
 					}
 				}
 			}

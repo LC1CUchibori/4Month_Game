@@ -6,7 +6,7 @@ TitleScene::~TitleScene() {
 	delete sprite_;
 
 	// 音源停止
-	audio_->StopWave(voiceHandle1_);
+	//audio_->StopWave(voiceHandle1_);
 }
 
 void TitleScene::Initialize() {

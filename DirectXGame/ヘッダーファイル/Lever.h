@@ -3,10 +3,12 @@
 #include "Audio.h" 
 #include <rand.h>
 
+class GameScene;
+
 class Lever
 {
 public:
-    void Initialize(Model* model, ViewProjection* viewProjection);
+    void Initialize(Model* model, ViewProjection* viewProjection,GameScene* pGameScene);
 
     void Update(int &medal, int&gameCont, bool&isFreePlay);
 
@@ -39,6 +41,8 @@ private:
     ViewProjection* viewProjection_ = nullptr;
     // インプット
     Input* input_ = nullptr;
+
+    GameScene* mode_ = nullptr;
 
     const float DownOffsetY = -0.2f; // 下がる距離
     const int DownTime = 10;         // 下がっている時間
