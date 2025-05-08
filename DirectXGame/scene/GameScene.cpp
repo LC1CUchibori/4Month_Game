@@ -214,6 +214,17 @@ void GameScene::Initialize() {
 	medalSprite_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
 	medalSprite_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
 
+	EnemyGameSprite_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
+	EnemyGameSprite_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
+	EnemyGameSprite_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
+	EnemyGameSprite_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
+	EnemyGameSprite_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
+	EnemyGameSprite_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
+	EnemyGameSprite_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
+	EnemyGameSprite_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
+	EnemyGameSprite_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
+	EnemyGameSprite_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
+
 	// 矢印の生成
 	Arrow_ = Sprite::Create(ArrowHandle_, { 480, 380 });
 
@@ -659,6 +670,9 @@ void GameScene::Draw() {
 	// メダルの数を描画
 	MedalDraw();
 
+	// 敵ゲーム数
+	//EnemyGameDraw();
+
 	// 矢印を描画
 	Arrow_->Draw();
 
@@ -666,27 +680,44 @@ void GameScene::Draw() {
 
 	playerSprite_->Draw();
 
+
 	if (isEnemyActive == true) {
-		/*if (GameCount) {
+		 
+		// 敵が出現している場合は描画
+		if (enemy1->GetIsActive()) {
+			enemySprite_[0]->Draw();
+		}
+		else if (enemy2->GetIsActive()) {
+			enemySprite_[1]->Draw();
+		}
+		else if (enemy3->GetIsActive()) {
+			enemySprite_[2]->Draw();
+		}
+		else if (enemy4->GetIsActive()) {
+			enemySprite_[3]->Draw();
+		}
+
+		if (lever_->IsPulled() && !wasLeverPulledLastFrame) {
 			enemyGameCount--;
+		}
 
-			if (enemyGameCount <= 0) {*/
+		// 今のレバー状態を保存（次フレームのために）
+		wasLeverPulledLastFrame = lever_->IsPulled();
 
-				// 敵が出現している場合は描画
-				if (enemy1->GetIsActive()) {
-					enemySprite_[0]->Draw();
-				}
-				else if (enemy2->GetIsActive()) {
-					enemySprite_[1]->Draw();
-				}
-				else if (enemy3->GetIsActive()) {
-					enemySprite_[2]->Draw();
-				}
-				else if (enemy4->GetIsActive()) {
-					enemySprite_[3]->Draw();
-				}
-		//	}
-	//	}
+		if (enemyGameCount <= 0) {
+			isEnemyActive = false;
+
+			isEnemyGameFlag = false;
+
+			enemyGameCount = 30;
+			wasLeverPulledLastFrame = false;
+
+			// 必要であれば敵も非アクティブに
+			enemy1->SetIsActive(false);
+			enemy2->SetIsActive(false);
+			enemy3->SetIsActive(false);
+			enemy4->SetIsActive(false);
+		}
 	}
 
 	if (input_->TriggerKey(DIK_E)) {
@@ -784,6 +815,36 @@ void GameScene::MedalDraw() {
 		x += spacing; // 画像の間隔
 	}
 }
+
+//void GameScene::EnemyGameDraw()
+//{
+//	//メダル数を最大5桁に制限
+//	if (Medal > 99999) {
+//		Medal = 99999; //6桁以上にならないようにする
+//	}
+//
+//	//メダル数を文字列に変換
+//	std::string countStr = std::to_string(Medal);
+//	size_t digitCount = countStr.length();
+//
+//	// 基準となる描画開始位置
+//	float baseX = 1230.0f, y = 190.0f;
+//	float spacing = 60.0f; // 画像の間隔
+//
+//	// 最小2桁はそのまま描画
+//	float x = baseX - (spacing * (digitCount - 1));
+//
+//	//各桁を対応する画像で描画
+//	for (size_t i = 0; i < digitCount; i++) {
+//		int index = countStr[i] - '0'; // 0～9 のインデックス
+//		if (index >= 0 && index < 10) {
+//			EnemyGameSprite_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
+//			EnemyGameSprite_[i]->SetPosition({ x, y }); // 位置を更新
+//			EnemyGameSprite_[i]->Draw(); // 描画
+//		}
+//		x += spacing; // 画像の間隔
+//	}
+//}
 
 void GameScene::SpawnCoins(int count) {
 	for (int i = 0; i < count; ++i) {

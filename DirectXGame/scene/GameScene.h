@@ -61,6 +61,8 @@ public: // メンバ関数
 	//メダルの数を描画
 	void MedalDraw();
 
+	void EnemyGameDraw();
+
 	//クリアフラグのgetter
 	bool IsCleared() const { return cleared_; }
 
@@ -168,6 +170,11 @@ private: // メンバ変数
 	// 敵出現時のゲーム数
 	int enemyGameCount = 0;
 
+	bool isEnemyGameFlag = false;
+
+	// 直前のレバー状態を保持する変数
+	bool wasLeverPulledLastFrame = false;
+
 	// プレイヤー
 	Sprite* playerSprite_ = nullptr;
 	uint32_t playerTextureHandle_ = 0;
@@ -180,6 +187,8 @@ private: // メンバ変数
 	Sprite* sprite_[10];
 	// メダルカウント用のスプライト
 	Sprite* medalSprite_[10];
+	// 敵ゲーム数
+	Sprite* EnemyGameSprite_[10];
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
 
