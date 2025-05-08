@@ -175,6 +175,11 @@ private: // メンバ変数
 	// 直前のレバー状態を保持する変数
 	bool wasLeverPulledLastFrame = false;
 
+	// プチュンのフラグ
+	bool isPutyunFlag = false;
+
+	int a = 0;
+
 	// プレイヤー
 	Sprite* playerSprite_ = nullptr;
 	uint32_t playerTextureHandle_ = 0;

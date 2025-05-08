@@ -288,9 +288,6 @@ void GameScene::Update() {
 		}
 	}
 
-	if (input_->TriggerKey(DIK_P)) {
-		puchun_->Start();
-	}
 
 	// 現在の状態を保存
 	static int currentButtonIndex = 0;
@@ -367,7 +364,7 @@ void GameScene::Update() {
 			// ベル
 			if (lever_->GetStorenum() <= 30) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
-				targetMedal += Medal + 7;
+				targetMedal = Medal + 7;
 				animating = true;
 			}
 
@@ -384,7 +381,7 @@ void GameScene::Update() {
 			// スイカ
 			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <=93) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
-				targetMedal += Medal + 5;
+				targetMedal = Medal + 5;
 				animating = true;
 				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
 
@@ -440,7 +437,7 @@ void GameScene::Update() {
 			// 弱チェリー
 			if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=96) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
-				targetMedal += Medal + 2;
+				targetMedal = Medal + 2;
 				animating = true;
 				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
 					// 敵の初期化
@@ -494,7 +491,7 @@ void GameScene::Update() {
 			// 強チェリー
 			if (lever_->GetStorenum() ==97) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
-				targetMedal += Medal + 2;
+				targetMedal = Medal + 2;
 				animating = true;
 				if (rand() % 100 < 100) {  // 25%の確率で敵を出現させる
 					// 敵の初期化
@@ -676,10 +673,9 @@ void GameScene::Draw() {
 	// 矢印を描画
 	Arrow_->Draw();
 
-	puchun_->Draw();
-
 	playerSprite_->Draw();
 
+	puchun_->Draw();
 
 	if (isEnemyActive == true) {
 		 
@@ -701,6 +697,13 @@ void GameScene::Draw() {
 			enemyGameCount--;
 		}
 
+		if (lever_->GetStorenum() == 150 && a == 0) {
+			puchun_->Start();
+			a = 1;
+		}
+
+		
+
 		// 今のレバー状態を保存（次フレームのために）
 		wasLeverPulledLastFrame = lever_->IsPulled();
 
@@ -711,6 +714,8 @@ void GameScene::Draw() {
 
 			enemyGameCount = 30;
 			wasLeverPulledLastFrame = false;
+
+			a = 0;
 
 			// 必要であれば敵も非アクティブに
 			enemy1->SetIsActive(false);

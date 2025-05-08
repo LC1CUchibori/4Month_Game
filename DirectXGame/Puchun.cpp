@@ -3,7 +3,7 @@
 void Puchun::Initialize(const std::vector<uint32_t>& textureHandles, Audio* audio) {
 	sprites.clear();
 	for (uint32_t handle : textureHandles) {
-		sprites.push_back(Sprite::Create(handle, {0, 0}));
+		sprites.push_back(Sprite::Create(handle, {525, 160}));
 	}
 
 	audio_ = audio; // Audioインスタンスを保持

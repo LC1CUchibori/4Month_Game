@@ -40,7 +40,7 @@ void Lever::Update(int &medal,int&gameCount,bool&isFreePlay)
         isRotating1_ == false && isRotating2_ == false && isRotating3_ == false&&mode_->Getmode()==1) {
         voiceHandle_ = audio_->PlayWave(LEVER, false);
         downTimer_ = DownTime;
-        storenum = rng.GetRandamNumber(1, 200);
+        storenum = rng.GetRandamNumber(150, 150);
 
 
         gameCount += 1;
