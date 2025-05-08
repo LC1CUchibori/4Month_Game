@@ -387,6 +387,8 @@ void GameScene::Update() {
 					// 敵の出現確率
 					std::vector<int> probabilities = {10, 20, 30, 40};
 
+					enemyGameCount = 30;
+
 					// ランダムで選ばれる敵のインデックスを決定
 					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
 					int cumulative_prob = 0;
@@ -440,6 +442,8 @@ void GameScene::Update() {
 					// 敵の出現確率
 					std::vector<int> probabilities = {10, 20, 30, 40};
 
+					enemyGameCount = 30;
+
 					// ランダムで選ばれる敵のインデックスを決定
 					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
 					int cumulative_prob = 0;
@@ -491,6 +495,8 @@ void GameScene::Update() {
 
 					// 敵の出現確率
 					std::vector<int> probabilities = {10, 20, 30, 40};
+
+					enemyGameCount = 30;
 
 					// ランダムで選ばれる敵のインデックスを決定
 					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
@@ -661,19 +667,26 @@ void GameScene::Draw() {
 	playerSprite_->Draw();
 
 	if (isEnemyActive == true) {
-		// 敵が出現している場合は描画
-		if (enemy1->GetIsActive()) {
-			enemySprite_[0]->Draw();
-		}
-		else if (enemy2->GetIsActive()) {
-			enemySprite_[1]->Draw();
-		}
-		else if (enemy3->GetIsActive()) {
-			enemySprite_[2]->Draw();
-		}
-		else if (enemy4->GetIsActive()) {
-			enemySprite_[3]->Draw();
-		}
+		/*if (GameCount) {
+			enemyGameCount--;
+
+			if (enemyGameCount <= 0) {*/
+
+				// 敵が出現している場合は描画
+				if (enemy1->GetIsActive()) {
+					enemySprite_[0]->Draw();
+				}
+				else if (enemy2->GetIsActive()) {
+					enemySprite_[1]->Draw();
+				}
+				else if (enemy3->GetIsActive()) {
+					enemySprite_[2]->Draw();
+				}
+				else if (enemy4->GetIsActive()) {
+					enemySprite_[3]->Draw();
+				}
+		//	}
+	//	}
 	}
 
 	if (input_->TriggerKey(DIK_E)) {

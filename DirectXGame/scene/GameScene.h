@@ -165,6 +165,9 @@ private: // メンバ変数
 	// ゲーム数
 	int gameCount_ = 0;
 
+	// 敵出現時のゲーム数
+	int enemyGameCount = 0;
+
 	// プレイヤー
 	Sprite* playerSprite_ = nullptr;
 	uint32_t playerTextureHandle_ = 0;
