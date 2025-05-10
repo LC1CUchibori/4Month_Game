@@ -18,8 +18,5 @@ private:
     ViewProjection* viewProjection_ = nullptr;
     Vector2 position_;
     Sprite* sprite_;
-
-    int walkAnimationTimer_ = 0;
-    float walkOffsetX_ = 0.0f;
 };
 
