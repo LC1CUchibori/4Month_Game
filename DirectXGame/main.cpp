@@ -13,7 +13,6 @@
 GameScene *gameScene = nullptr;
 TitleScene *titleScene = nullptr;
 GameClear *gameClear = nullptr;
-GameOver *gameOver = nullptr;
 
 // シーン
 enum class Scene {
@@ -23,7 +22,6 @@ enum class Scene {
 	kTitle,
 	kGame,
 	kGameCler,
-	kGameOver
 };
 
 //現在シーン
@@ -167,6 +165,7 @@ void ChangeScene() {
 		if (isTabPressed && Input::GetInstance()->TriggerKey(DIK_LEFT)) {
 			isLeftSelected = true;
 		}
+
 		//　ゴールした時
 		if (isTabPressed && isLeftSelected && Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 			// シーンの変更
@@ -194,18 +193,6 @@ void ChangeScene() {
 			titleScene->Initialize();
 		}
 		break;
-	case Scene::kGameOver:
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			// シーンの変更
-			scene = Scene::kTitle;
-			// 旧シーンの解放
-			delete gameOver;
-			gameOver = nullptr;
-			// 新シーンの生成と初期化
-			titleScene = new TitleScene();
-			titleScene->Initialize();
-		}
-		break;
 	}
 }
 
@@ -220,9 +207,6 @@ void UpdateScene() {
 	case Scene::kGameCler:
 		gameClear->Update();
 		break;
-	case Scene::kGameOver:
-		gameOver->Update();
-		break;
 	}
 }
 
@@ -236,9 +220,6 @@ void DrawScene() {
 		break;
 	case Scene::kGameCler:
 		gameClear->Draw();
-		break;
-	case Scene::kGameOver:
-		gameOver->Draw();
 		break;
 	}
 }
