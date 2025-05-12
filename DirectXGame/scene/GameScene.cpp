@@ -383,7 +383,7 @@ void GameScene::Update() {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal = Medal + 5;
 				animating = true;
-				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
+				if (rand() % 100 < 40) {  // 10%の確率で敵を出現させる
 
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
@@ -419,7 +419,7 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (スイカ)
-					if (isEnemyActive==true && rand() % 100 < 50 && mode_ == 1) {  // 50%の確率で敵を倒せる
+					if (isEnemyActive==true && rand() % 100 < 100 && mode_ == 1) {  // 50%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
 						mode_ = 0;
@@ -439,7 +439,7 @@ void GameScene::Update() {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal = Medal + 2;
 				animating = true;
-				if (rand() % 100 < 100) {  // 10%の確率で敵を出現させる
+				if (rand() % 100 < 30) {  // 10%の確率で敵を出現させる
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
 					enemies.push_back(enemy1);
@@ -474,7 +474,7 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (弱チェリー)
-					if (isEnemyActive && rand() % 100 < 30 && mode_ == 1) {  // 30%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 30%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
 						mode_ = 0;
@@ -493,7 +493,7 @@ void GameScene::Update() {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal = Medal + 2;
 				animating = true;
-				if (rand() % 100 < 100) {  // 25%の確率で敵を出現させる
+				if (rand() % 100 < 60) {  // 25%の確率で敵を出現させる
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
 					enemies.push_back(enemy1);
@@ -528,7 +528,7 @@ void GameScene::Update() {
 					}
 
 					// 敵を倒す抽選 (強チェリー)
-					if (isEnemyActive && rand() % 100 < 80 && mode_ == 1) {  // 80%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 80%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[selected_enemy_index]->SetIsActive(false);
 						mode_ = 0;
