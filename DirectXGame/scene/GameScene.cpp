@@ -69,7 +69,7 @@ void GameScene::Initialize() {
 
 	// 退室
 	OutRoomTextureHandle_ = TextureManager::Load("OutRoom.png");
-	OutRoomSprite_ = Sprite::Create(OutRoomTextureHandle_, { 0,0 });
+	OutRoomSprite_ = Sprite::Create(OutRoomTextureHandle_, { 990,355 });
 
 	// 退室
 	OutRoomPickTextureHandle_ = TextureManager::Load("OutRoomPick.png");
@@ -749,16 +749,10 @@ void GameScene::Draw() {
 	// 操作説明描画
 	OperationSprite_->Draw();
 
-	if (isOutRoom) {
-		OutRoomPickSprite_->Draw();
-	}
-	if (isOutRoom2) {
-		OutRoomPickSprite2_->Draw();
-	}
-	if (isOutRoom3) {
-		OutRoomPickSprite3_->Draw();
-	}
+	// 退室
+	OutRoomSprite_->Draw();
 
+	// 退室選択
 	if (input_->TriggerKey(DIK_TAB)) {
 		isOutRoom = !isOutRoom;
 	}
@@ -767,6 +761,16 @@ void GameScene::Draw() {
 	}
 	if (input_->TriggerKey(DIK_RIGHT)) {
 		isOutRoom3 = !isOutRoom3;
+	}
+
+	if (isOutRoom) {
+		OutRoomPickSprite_->Draw();
+	}
+	if (isOutRoom2) {
+		OutRoomPickSprite2_->Draw();
+	}
+	if (isOutRoom3) {
+		OutRoomPickSprite3_->Draw();
 	}
 
 	// スプライト描画後処理
