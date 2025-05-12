@@ -229,15 +229,30 @@ private: // メンバ変数
 	uint32_t voiceHandleCoin_ = 0;
 
 	// 説明
-	uint32_t RuleTextureHandle_ = 0;
 	Sprite* RuleSprite_ = nullptr;
+	uint32_t RuleTextureHandle_ = 0;
 
-	// 操作説明のスプライト
+	// 操作説明
 	Sprite* OperationSprite_ = nullptr;
-	// 操作説明テクスチャハンドル
 	uint32_t OperationtextureHandle_ = 0;
 
+	// 退室
+	Sprite* OutRoomSprite_ = nullptr;
+	uint32_t OutRoomTextureHandle_ = 0;
+
+	//退室選択
+	Sprite* OutRoomPickSprite_ = nullptr;
+	Sprite* OutRoomPickSprite2_ = nullptr;
+	Sprite* OutRoomPickSprite3_ = nullptr;
+	uint32_t OutRoomPickTextureHandle_ = 0;
+	uint32_t OutRoomPick2TextureHandle_ = 0;
+	uint32_t OutRoomPick3TextureHandle_ = 0;
+
 	bool isRule = false; // 最初は非表示
+
+	bool isOutRoom = false;
+	bool isOutRoom2 = false;
+	bool isOutRoom3 = false;
 
 	//リールを動かせなくするフラグ
 	bool Realflag = false;

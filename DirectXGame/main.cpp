@@ -38,6 +38,9 @@ void UpdateScene();
 //シーンの描画
 void DrawScene();
 
+bool isTabPressed = false;
+bool isLeftSelected = false;
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
@@ -154,8 +157,18 @@ void ChangeScene() {
 		}
 		break;
 	case Scene::kGame:
+		// TAB押下で状態変更
+		if (Input::GetInstance()->TriggerKey(DIK_TAB)) {
+			isTabPressed = true;
+			isLeftSelected = false;
+		}
+
+		// TAB状態中にLEFT押下で選択
+		if (isTabPressed && Input::GetInstance()->TriggerKey(DIK_LEFT)) {
+			isLeftSelected = true;
+		}
 		//　ゴールした時
-		if (gameScene->IsCleared()) {
+		if (isTabPressed && isLeftSelected && Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 			// シーンの変更
 			scene = Scene::kGameCler;
 			// 旧シーンの解放
@@ -164,17 +177,9 @@ void ChangeScene() {
 			// 新シーンの生成と初期化
 			gameClear = new GameClear();
 			gameClear->Initialize();
-		}
-		// 死んだ時
-		else if (gameScene->IsDead()) {
-			// シーンの変更
-			scene = Scene::kGameOver;
-			// 旧シーンの解放
-			delete gameScene;
-			gameScene = nullptr;
-			// 新シーンの生成と初期化
-			gameOver = new GameOver();
-			gameOver->Initialize();
+
+			isTabPressed = false;
+			isLeftSelected = false;
 		}
 		break;
 	case Scene::kGameCler:

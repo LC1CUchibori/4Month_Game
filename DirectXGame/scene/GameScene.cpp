@@ -67,6 +67,18 @@ void GameScene::Initialize() {
 	OperationtextureHandle_ = TextureManager::Load("UI/Operation.png");
 	OperationSprite_ = Sprite::Create(OperationtextureHandle_, { 0, 0 });
 
+	// 退室
+	OutRoomTextureHandle_ = TextureManager::Load("OutRoom.png");
+	OutRoomSprite_ = Sprite::Create(OutRoomTextureHandle_, { 0,0 });
+
+	// 退室
+	OutRoomPickTextureHandle_ = TextureManager::Load("OutRoomPick.png");
+	OutRoomPick2TextureHandle_ = TextureManager::Load("OutRoomPick2.png");
+	OutRoomPick3TextureHandle_ = TextureManager::Load("OutRoomPick3.png");
+	OutRoomPickSprite_ = Sprite::Create(OutRoomPickTextureHandle_, { 490,200 });
+	OutRoomPickSprite2_ = Sprite::Create(OutRoomPick2TextureHandle_, { 490,200 });
+	OutRoomPickSprite3_ = Sprite::Create(OutRoomPick3TextureHandle_, { 490,200 });
+
 	// モデル生成
 	modelSlot_ = Model::CreateFromOBJ("Slot", true);
 	// スロットの生成
@@ -736,6 +748,26 @@ void GameScene::Draw() {
 
 	// 操作説明描画
 	OperationSprite_->Draw();
+
+	if (isOutRoom) {
+		OutRoomPickSprite_->Draw();
+	}
+	if (isOutRoom2) {
+		OutRoomPickSprite2_->Draw();
+	}
+	if (isOutRoom3) {
+		OutRoomPickSprite3_->Draw();
+	}
+
+	if (input_->TriggerKey(DIK_TAB)) {
+		isOutRoom = !isOutRoom;
+	}
+	if (input_->TriggerKey(DIK_LEFT)) {
+		isOutRoom2 = !isOutRoom2;
+	}
+	if (input_->TriggerKey(DIK_RIGHT)) {
+		isOutRoom3 = !isOutRoom3;
+	}
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
