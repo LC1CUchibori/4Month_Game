@@ -97,7 +97,14 @@ void Reel2::StopRotation()
 	if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <=97) {
 		rotationX = 130.0f;
 	}
-	//if(reel1->GetResultSymbol() == Bell){}
+	// 赤7
+	if (lever_->GetStorenum() == 301) {
+		rotationX = 235.6f;
+	}
+	// 青7
+	if (lever_->GetStorenum() == 302) {
+		rotationX = 290.0f;
+	}
 
 	// 0～2πの範囲に正規化
 	rotationX = fmod(rotationX, 2.0f * 3.14159265f);

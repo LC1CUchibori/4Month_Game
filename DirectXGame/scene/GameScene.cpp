@@ -337,6 +337,9 @@ void GameScene::Update() {
 		reel2IsStopped_ = false;
 		reel3IsStopped_ = false;
 
+		EnemyBONUSGameCount--;
+	
+
 		// レバーを引いたらボタン押しの進行もリセットする
 		currentButtonIndex = 0;
 		pressCount = 0;
@@ -350,6 +353,10 @@ void GameScene::Update() {
 		if (leverCooldownTimer_ >= kLeverCooldownMax) {
 			canPullLever_ = true; // 2秒経過後にレバー操作解禁
 		}
+	}
+
+	if (EnemyBONUSGameCount >= 1) {
+		mode_ = 2;
 	}
 
 #pragma region ボタンの処理
@@ -402,6 +409,16 @@ void GameScene::Update() {
 				isFreePlay = false;
 			}
 
+			// 赤7
+			if (lever_->GetStorenum() == 301) {
+				targetMedal+= 15;
+			}
+
+			// 青7
+			if (lever_->GetStorenum() == 302) {
+				targetMedal+= 15;
+			}
+
 			// スイカ
 			if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <= 93) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
@@ -448,7 +465,7 @@ void GameScene::Update() {
 						enemies[1]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 300;
-						enemyGameCount = 30;
+						
 					}
 					// 敵2を倒す抽選 (スイカ)
 					if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1) {  // 50%の確率で敵を倒せる
@@ -456,7 +473,7 @@ void GameScene::Update() {
 						enemies[2]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 450;
-						enemyGameCount = 30;
+						
 					}
 					// 敵3を倒す抽選 (スイカ)
 					if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1) {  // 50%の確率で敵を倒せる
@@ -464,7 +481,7 @@ void GameScene::Update() {
 						enemies[3]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 600;
-						enemyGameCount = 30;
+					
 					}
 					// 敵4を倒す抽選 (スイカ)
 					if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1) {  // 50%の確率で敵を倒せる
@@ -472,7 +489,7 @@ void GameScene::Update() {
 						enemies[4]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 750;
-						enemyGameCount = 30;
+						
 					}
 
 					else if (mode_ == 0) {
@@ -526,7 +543,7 @@ void GameScene::Update() {
 						enemies[1]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 300;
-						enemyGameCount = 30;
+						
 					}
 					// 敵2を倒す抽選 (弱チェリー)
 					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 30%の確率で敵を倒せる
@@ -534,7 +551,7 @@ void GameScene::Update() {
 						enemies[2]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 450;
-						enemyGameCount = 30;
+						
 					}
 					// 敵3を倒す抽選 (弱チェリー)
 					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 30%の確率で敵を倒せる
@@ -542,7 +559,7 @@ void GameScene::Update() {
 						enemies[3]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 600;
-						enemyGameCount = 30;
+					
 					}
 					// 敵4を倒す抽選 (弱チェリー)
 					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 30%の確率で敵を倒せる
@@ -550,7 +567,7 @@ void GameScene::Update() {
 						enemies[4]->SetIsActive(false);
 						mode_ = 0;
 						Medal += 750;
-						enemyGameCount = 30;
+						
 					}
 
 					else if (mode_ == 0) {
@@ -563,7 +580,7 @@ void GameScene::Update() {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal = Medal + 2;
 				animating = true;
-				if (rand() % 100 < 60) {  // 25%の確率で敵を出現させる
+				if (rand() % 100 < 20) {  // 60%の確率で敵を出現させる
 					// 敵の初期化
 					std::vector<Enemy*> enemies;  // 4体の敵を格納する配列
 					enemies.push_back(enemy1);
@@ -597,36 +614,36 @@ void GameScene::Update() {
 						isEnemyActive = true;
 					}
 					// 敵1を倒す抽選 (強チェリー)
-					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 80%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1&&enemies[1]) {  // 80%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[1]->SetIsActive(false);
 						mode_ = 0;
-						Medal += 300;
-						enemyGameCount = 30;
+						//Medal += 300;
+						EnemyBONUSGameCount = 20;
 					}
 					// 敵2を倒す抽選 (強チェリー)
-					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 80%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1&&enemies[2]) {  // 80%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[2]->SetIsActive(false);
 						mode_ = 0;
-						Medal += 450;
-						enemyGameCount = 30;
+						//Medal += 450;
+						EnemyBONUSGameCount = 30;
 					}
 					// 敵3を倒す抽選 (強チェリー)
-					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 80%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1&&enemies[3]) {  // 80%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[3]->SetIsActive(false);
 						mode_ = 0;
-						Medal += 600;
-						enemyGameCount = 30;
+						//Medal += 600;
+						EnemyBONUSGameCount = 40;
 					}
 					// 敵4を倒す抽選 (強チェリー)
-					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1) {  // 80%の確率で敵を倒せる
+					if (isEnemyActive && rand() % 100 < 100 && mode_ == 1&&enemies[4]) {  // 80%の確率で敵を倒せる
 						isEnemyActive = false;
 						enemies[4]->SetIsActive(false);
 						mode_ = 0;
-						Medal += 750;
-						enemyGameCount = 30;
+						//Medal += 750;
+						EnemyBONUSGameCount = 50;
 					}
 
 					else if(mode_ ==0){
@@ -635,6 +652,8 @@ void GameScene::Update() {
 				}
 			}
 		}
+
+		
 
 		// ゲームカウントを進める
 		if (isEnemyActive && !enemyDefeated) {

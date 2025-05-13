@@ -173,10 +173,8 @@ private: // メンバ変数
 	bool isEnemyGameFlag = false;
 
 	// 敵を倒したときのBONUSゲーム数
-	int Enemy1BONUSGameCount = 20;
-	int Enemy2BONUSGameCount = 30;
-	int Enemy3BONUSGameCount = 40;
-	int Enemy4BONUSGameCount = 50;
+	int EnemyBONUSGameCount = 0;
+
 
 	// 直前のレバー状態を保持する変数
 	bool wasLeverPulledLastFrame = false;

@@ -100,6 +100,14 @@ void Reel3::StopRotation()
 	if (lever_->GetStorenum() ==97) {
 		rotationX = 321.5f;
 	}
+	// 赤7
+	if (lever_->GetStorenum() == 301) {
+		rotationX = 221.0f;
+	}
+	// 青7
+	if (lever_->GetStorenum() == 302) {
+		rotationX = 180.5f;
+	}
 
 	// 0～2πの範囲に正規化
 	rotationX = fmod(rotationX, 2.0f * 3.14159265f);
