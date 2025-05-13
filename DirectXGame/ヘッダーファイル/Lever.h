@@ -10,7 +10,7 @@ class Lever
 public:
     void Initialize(Model* model, ViewProjection* viewProjection,GameScene* pGameScene);
 
-    void Update(int &medal, int&gameCont, bool&isFreePlay);
+    void Update(int &medal, int&gameCont, bool&isFreePlay, bool canPullLever);
 
     void Draw();
 

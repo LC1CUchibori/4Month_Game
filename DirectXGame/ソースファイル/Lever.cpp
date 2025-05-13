@@ -18,8 +18,14 @@ void Lever::Initialize(Model *model, ViewProjection* viewProjection, GameScene* 
 	viewProjection_ = viewProjection;
 }
 
-void Lever::Update(int &medal,int&gameCount,bool&isFreePlay)
+void Lever::Update(int &medal,int&gameCount,bool&isFreePlay, bool canPullLever)
 {
+    // クールダウン中ならレバーを引けない
+    if (!canPullLever) {
+        worldTransform_.UpdateMatrix();
+        return;
+    }
+
     // エンターキーが押されたらタイマー開始
     if (medal >= 3 && input_->TriggerKey(DIK_RETURN) &&
         isRotating1_ == false && isRotating2_ == false && isRotating3_ == false&&mode_->Getmode()==0) {

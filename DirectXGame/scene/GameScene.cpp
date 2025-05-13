@@ -262,8 +262,7 @@ void GameScene::Update() {
 	// スロットリール3
 	reel3_->Update();
 
-	// レバー
-	lever_->Update(Medal,GameCount,isFreePlay);
+	lever_->Update(Medal, GameCount, isFreePlay, canPullLever_);
 
 	// ボタン1
 	button1_->Update();
@@ -328,7 +327,7 @@ void GameScene::Update() {
 
 #pragma region レバーの処理
 	// レバーが引かれていたらリール回転開始
-	if (lever_->IsPulled())
+	if (canPullLever_ && lever_->IsPulled())
 	{
 		reel1_->StartRotation();
 		reel2_->StartRotation();
@@ -343,6 +342,15 @@ void GameScene::Update() {
 		pressCount = 0;
 	}
 #pragma endregion
+
+	// レバーのクールダウン処理
+	if (!canPullLever_) {
+		leverCooldownTimer_++;
+
+		if (leverCooldownTimer_ >= kLeverCooldownMax) {
+			canPullLever_ = true; // 2秒経過後にレバー操作解禁
+		}
+	}
 
 #pragma region ボタンの処理
 	// キー入力
@@ -373,10 +381,14 @@ void GameScene::Update() {
 			reel3_->StopRotation();
 			reel3IsStopped_ = true; // リール3を停止状態に設定
 
+			canPullLever_ = false;
+			leverCooldownTimer_ = 0;
+
 			// ベル
 			if (lever_->GetStorenum() <= 30) {
 				voiceHandle3_ = audio_->PlayWave(Get, false);
 				targetMedal = Medal + 7;
+
 				animating = true;
 			}
 
@@ -553,6 +565,7 @@ void GameScene::Update() {
 				}
 			}
 		}
+
 
 		// ゲームカウントが10回に達したら、敵が逃げる
 		//if (isEnemyActive && gameCount >= 10) {

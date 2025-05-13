@@ -263,6 +263,10 @@ private: // メンバ変数
 
 	bool isFreePlay = false;
 
+	bool canPullLever_ = true;       // レバーを引けるかどうか
+	int leverCooldownTimer_ = 0;     // レバーの待機時間タイマー
+	const int kLeverCooldownMax = 60; // 2秒間（60FPSなら120フレーム）
+
 	int gameCount = 0;
 	bool isEnemyActive = false;  // 敵が出現したかどうか
 	Enemy* activeEnemy = nullptr;  // 現在アクティブな敵
