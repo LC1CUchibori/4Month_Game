@@ -182,7 +182,7 @@ private: // メンバ変数
 	// プチュンのフラグ
 	bool isPutyunFlag = false;
 
-	int a = 0;
+	int putyunMode = 0;
 
 	// プレイヤー
 	Sprite* playerSprite_ = nullptr;

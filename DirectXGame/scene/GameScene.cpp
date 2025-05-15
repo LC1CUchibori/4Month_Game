@@ -179,15 +179,15 @@ void GameScene::Initialize() {
 	enemy4 = new Enemy();
 
 	// 敵生成
-	enemyTextureHandle_[0] = TextureManager::Load("Dragon.png");
-	enemyTextureHandle_[1] = TextureManager::Load("Goremu.png");
-	enemyTextureHandle_[2] = TextureManager::Load("Mimikku.png");
-	enemyTextureHandle_[3] = TextureManager::Load("Suraimu.png");
+	enemyTextureHandle_[0] = TextureManager::Load("Suraimu.png");
+	enemyTextureHandle_[1] = TextureManager::Load("Mimikku.png");
+	enemyTextureHandle_[2] = TextureManager::Load("Goremu.png");
+	enemyTextureHandle_[3] = TextureManager::Load("Dragon.png");
 	// 敵スプライト
-	enemySprite_[0] = Sprite::Create(enemyTextureHandle_[0], {435,-38 });
-	enemySprite_[1] = Sprite::Create(enemyTextureHandle_[1], { 420,-15 });
-	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 450,30 });
-	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 450,30 });
+	enemySprite_[0] = Sprite::Create(enemyTextureHandle_[0], {450,30 });
+	enemySprite_[1] = Sprite::Create(enemyTextureHandle_[1], { 450,30 });
+	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 420,-15 });
+	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 435,-38 });
 	
 	//画像生成
 	TextureHandle_[0] = TextureManager::Load("UI/0.png");
@@ -323,7 +323,21 @@ void GameScene::Update() {
 	}
 #pragma endregion
 
-	
+	// レバーのクールダウン処理
+	if (!canPullLever_) {
+		leverCooldownTimer_++;
+
+		if (leverCooldownTimer_ >= kLeverCooldownMax) {
+			canPullLever_ = true; // 2秒経過後にレバー操作解禁
+		}
+	}
+
+	if (EnemyBONUSGameCount >= 1) {
+		mode_ = 2;
+	}
+	else if (EnemyBONUSGameCount <= 0&&mode_==2) {
+		mode_ = 0;
+	}
 
 #pragma region レバーの処理
 	// レバーが引かれていたらリール回転開始
@@ -337,8 +351,9 @@ void GameScene::Update() {
 		reel2IsStopped_ = false;
 		reel3IsStopped_ = false;
 
-		EnemyBONUSGameCount--;
-	
+		if (mode_ == 2) {
+			EnemyBONUSGameCount--; 
+		}
 
 		// レバーを引いたらボタン押しの進行もリセットする
 		currentButtonIndex = 0;
@@ -346,22 +361,6 @@ void GameScene::Update() {
 	}
 #pragma endregion
 
-	// レバーのクールダウン処理
-	if (!canPullLever_) {
-		leverCooldownTimer_++;
-
-		if (leverCooldownTimer_ >= kLeverCooldownMax) {
-			canPullLever_ = true; // 2秒経過後にレバー操作解禁
-		}
-	}
-
-	if (EnemyBONUSGameCount >= 1) {
-		mode_ = 2;
-	}
-
-	if (EnemyBONUSGameCount <= 0&&mode_==2) {
-		mode_ = 0;
-	}
 
 #pragma region ボタンの処理
 	// キー入力
@@ -436,35 +435,6 @@ void GameScene::Update() {
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
 
-				if (rand() % 100 < 50) {  // 50%の確率で敵を出現させる
-
-					// 敵の出現確率
-					std::vector<int> probabilities = { 10, 20, 30, 40 };
-
-					enemyGameCount = 30;
-
-					// ランダムで選ばれる敵のインデックスを決定
-					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
-					int cumulative_prob = 0;
-					int selected_enemy_index = -1;
-
-					// 確率に基づいて選ばれる敵を決定
-					for (int i = 0; i < probabilities.size(); ++i) {
-						cumulative_prob += probabilities[i];
-						if (rand_value < cumulative_prob) {
-							selected_enemy_index = i;  // この敵が選ばれる
-							break;
-						}
-					}
-
-					// 選ばれた敵を描画
-					if (selected_enemy_index != -1) {
-						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
-						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
-						isEnemyActive = true;
-					}
-				}
-
 				// 敵1を倒す抽選 (スイカ)
 				if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 500%の確率で敵を倒せる
 					isEnemyActive = false;
@@ -490,8 +460,36 @@ void GameScene::Update() {
 					EnemyBONUSGameCount = 20;
 				}
 
-				if (mode_ == 0) {
-					mode_ = 1;
+				if (rand() % 100 < 50) {  // 50%の確率で敵を出現させる
+
+					// 敵の出現確率
+					std::vector<int> probabilities = { 60, 25, 10, 5 };
+
+					enemyGameCount = 30;
+
+					// ランダムで選ばれる敵のインデックスを決定
+					int rand_value = rand() % 100;  // 0~99 のランダム値を生成
+					int cumulative_prob = 0;
+					int selected_enemy_index = -1;
+
+					// 確率に基づいて選ばれる敵を決定
+					for (int i = 0; i < probabilities.size(); ++i) {
+						cumulative_prob += probabilities[i];
+						if (rand_value < cumulative_prob) {
+							selected_enemy_index = i;  // この敵が選ばれる
+							break;
+						}
+					}
+
+					// 選ばれた敵を描画
+					if (selected_enemy_index != -1) {
+						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
+						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
+						isEnemyActive = true;
+					}
+					if (mode_ == 0) {
+						mode_ = 1;
+					}
 				}
 			}
 
@@ -508,10 +506,35 @@ void GameScene::Update() {
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
 
+				// 敵1を倒す抽選 (弱チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[0]->SetIsActive(false);
+					EnemyBONUSGameCount = 20;
+				}
+				// 敵2を倒す抽選 (弱チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[1]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[1]->SetIsActive(false);
+					EnemyBONUSGameCount = 30;
+				}
+				// 敵3を倒す抽選 (弱チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[2]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[2]->SetIsActive(false);
+					EnemyBONUSGameCount = 40;
+				}
+				// 敵4を倒す抽選 (弱チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[3]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[3]->SetIsActive(false);
+					EnemyBONUSGameCount = 50;
+				}
+
 				if (rand() % 100 < 30) {  // 30%の確率で敵を出現させる
 
 					// 敵の出現確率
-					std::vector<int> probabilities = { 10, 20, 30, 40 };
+					std::vector<int> probabilities = { 60, 25, 10, 5 };
 
 					enemyGameCount = 30;
 
@@ -536,34 +559,9 @@ void GameScene::Update() {
 						isEnemyActive = true;
 					}
 
-				}
-				// 敵1を倒す抽選 (弱チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[0]->SetIsActive(false);
-					EnemyBONUSGameCount = 50;
-				}
-				// 敵2を倒す抽選 (弱チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[1]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[1]->SetIsActive(false);
-					EnemyBONUSGameCount = 40;
-				}
-				// 敵3を倒す抽選 (弱チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[2]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[2]->SetIsActive(false);
-					EnemyBONUSGameCount = 30;
-				}
-				// 敵4を倒す抽選 (弱チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[3]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[3]->SetIsActive(false);
-					EnemyBONUSGameCount = 20;
-				}
-
-				if (mode_ == 0) {
-					mode_ = 1;
+					if (mode_ == 0) {
+						mode_ = 1;
+					}
 				}
 			}
 
@@ -580,10 +578,55 @@ void GameScene::Update() {
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
 
+				if (putyunMode == 1) {
+					if (isEnemyActive &&enemies[0]) {
+						enemies[0]->SetIsActive(false);
+						EnemyBONUSGameCount = 20;
+					}
+					else if (isEnemyActive  &&enemies[1]) {
+						enemies[1]->SetIsActive(false);
+						EnemyBONUSGameCount = 30;
+					}
+					else if (isEnemyActive &&enemies[2]) {
+						enemies[2]->SetIsActive(false);
+						EnemyBONUSGameCount = 40;
+					}
+					else if (isEnemyActive &&enemies[3]) {
+						enemies[3]->SetIsActive(false);
+						EnemyBONUSGameCount = 50;
+					}
+					isEnemyActive = false;
+				}
+
+				// 敵1を倒す抽選 (強チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[0]->SetIsActive(false);
+					EnemyBONUSGameCount = 5;
+				}
+				// 敵2を倒す抽選 (強チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[1]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[1]->SetIsActive(false);
+					EnemyBONUSGameCount = 5;
+				}
+				// 敵3を倒す抽選 (強チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[2]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[2]->SetIsActive(false);
+					EnemyBONUSGameCount = 5;
+				}
+				// 敵4を倒す抽選 (強チェリー)
+				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[3]) {  // 100%の確率で敵を倒せる
+					isEnemyActive = false;
+					enemies[3]->SetIsActive(false);
+					EnemyBONUSGameCount = 5;
+				}
+
 				if (rand() % 100 < 80) {  // 80%の確率で敵を出現させる
 
 					// 敵の出現確率
-					std::vector<int> probabilities = { 10, 20, 30, 40 };
+					std::vector<int> probabilities = { 60, 25, 10, 5 };
 
 					enemyGameCount = 30;
 
@@ -607,38 +650,10 @@ void GameScene::Update() {
 						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
 						isEnemyActive = true;
 					}
-
+					if (mode_ == 0) {
+						mode_ = 1;
+					}
 				}
-
-				// 敵1を倒す抽選 (強チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[0]->SetIsActive(false);;
-					EnemyBONUSGameCount = 5;
-				}
-				// 敵2を倒す抽選 (強チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[1]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[1]->SetIsActive(false);
-					EnemyBONUSGameCount = 5;
-				}
-				// 敵3を倒す抽選 (強チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[2]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[2]->SetIsActive(false);
-					EnemyBONUSGameCount = 5;
-				}
-				// 敵4を倒す抽選 (強チェリー)
-				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[3]) {  // 100%の確率で敵を倒せる
-					isEnemyActive = false;
-					enemies[3]->SetIsActive(false);
-					EnemyBONUSGameCount = 5;
-				}
-
-				if (mode_ == 0) {
-					mode_ = 1;
-				}
-
 			}
 		}
 
@@ -690,6 +705,7 @@ void GameScene::Draw() {
 
 	// スロット内の背景
 	DanjonBGSprite->Draw();
+
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -768,7 +784,6 @@ void GameScene::Draw() {
 
 	playerSprite_->Draw();
 
-	puchun_->Draw();
 
 	if (isEnemyActive == true) {
 		 
@@ -790,12 +805,20 @@ void GameScene::Draw() {
 			enemyGameCount--;
 		}
 
-		if (lever_->GetStorenum() == 150 && a == 0) {
+		if (lever_->GetStorenum() == 150 && putyunMode == 0) {
 			puchun_->Start();
-			a = 1;
+			putyunMode = 1;
 		}
 
+		if (putyunMode == 1) {
+			// 必要であれば敵も非アクティブに
+			enemy1->SetIsActive(false);
+			enemy2->SetIsActive(false);
+			enemy3->SetIsActive(false);
+			enemy4->SetIsActive(false);
+		}
 		
+		puchun_->Draw();
 
 		// 今のレバー状態を保存（次フレームのために）
 		wasLeverPulledLastFrame = lever_->IsPulled();
@@ -808,7 +831,7 @@ void GameScene::Draw() {
 			enemyGameCount = 30;
 			wasLeverPulledLastFrame = false;
 
-			a = 0;
+			putyunMode = 0;
 
 			// 必要であれば敵も非アクティブに
 			enemy1->SetIsActive(false);
@@ -817,6 +840,8 @@ void GameScene::Draw() {
 			enemy4->SetIsActive(false);
 		}
 	}
+
+
 
 	if (input_->TriggerKey(DIK_E)) {
 		// 音声再生
