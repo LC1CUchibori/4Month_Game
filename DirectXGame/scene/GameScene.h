@@ -151,7 +151,7 @@ private: // メンバ変数
 	bool reel3IsStopped_ = false;
 
 	//メダル
-	int Medal = 46;
+	int Medal = 3;
 	//目標メダル
 	int targetMedal = 0;
 	//メダル増加にかかる時間
@@ -278,5 +278,9 @@ private: // メンバ変数
 
 	int coinsDeletedCount_ = 0; // 消えたコインの数をカウント
 
+	// モード
 	int mode_ = 0;
+
+	// 所持金
+	int MaxMoney = 4600;
 };

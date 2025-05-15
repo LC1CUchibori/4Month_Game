@@ -311,13 +311,14 @@ void GameScene::Update() {
 		Vector2 v = Input::GetInstance()->GetMousePosition();
 
 		//緑の投入口の判定処理
-		if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455) {
+		if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455&& MaxMoney >= 46) {
+			MaxMoney -= 46;
 			Medal += 46;
 		}
 
 
 		//メダルが3枚の時にレールを回す処理
-		if (Medal >= 3) {			
+		if (Medal >= 3&&MaxMoney>=46) {			
 			Realflag = true;
 		}
 	}
