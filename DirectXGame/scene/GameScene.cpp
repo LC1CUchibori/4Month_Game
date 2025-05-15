@@ -352,10 +352,6 @@ void GameScene::Update() {
 		reel2IsStopped_ = false;
 		reel3IsStopped_ = false;
 
-		if (mode_ == 2) {
-			EnemyBONUSGameCount--; 
-		}
-
 		// レバーを引いたらボタン押しの進行もリセットする
 		currentButtonIndex = 0;
 		pressCount = 0;
@@ -377,6 +373,9 @@ void GameScene::Update() {
 			button1_->Press();
 			reel1_->StopRotation();
 			reel1IsStopped_ = true; // リール1を停止状態に設定
+			if (mode_ == 2) {
+				EnemyBONUSGameCount--; 
+			}
 		}
 		else if (!reel2IsStopped_ && currentButtonIndex == 1)
 		{
@@ -860,25 +859,38 @@ void GameScene::Draw() {
 	OutRoomSprite_->Draw();
 
 	// 退室選択
+	// 退室選択
 	if (input_->TriggerKey(DIK_TAB)) {
 		isOutRoom = !isOutRoom;
 	}
 	if (input_->TriggerKey(DIK_LEFT)) {
 		isOutRoom2 = !isOutRoom2;
+		if (isOutRoom2) {
+			isOutRoom3 = false; // 3を消す
+		}
 	}
 	if (input_->TriggerKey(DIK_RIGHT)) {
-		isOutRoom3 = !isOutRoom3;
+		isOutRoom3 = true;
+		isOutRoom2 = false; // 2を消す
 	}
 
+	// SPACEキーで右の退室表示を消す
+	if (isOutRoom3 && input_->TriggerKey(DIK_SPACE)) {
+		isOutRoom3 = false;
+		isOutRoom = false;
+	}
+
+	// 描画処理
 	if (isOutRoom) {
 		OutRoomPickSprite_->Draw();
 	}
-	if (isOutRoom2) {
+	if (isOutRoom2 && !isOutRoom3) {
 		OutRoomPickSprite2_->Draw();
 	}
-	if (isOutRoom3) {
+	if (isOutRoom3 && !isOutRoom2) {
 		OutRoomPickSprite3_->Draw();
 	}
+
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

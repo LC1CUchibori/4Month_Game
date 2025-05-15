@@ -166,6 +166,11 @@ void ChangeScene() {
 			isLeftSelected = true;
 		}
 
+		// TAB状態中にRIGHT押下で選択解除
+		if (isTabPressed && Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
+			isLeftSelected = false;
+		}
+
 		//　ゴールした時
 		if (isTabPressed && isLeftSelected && Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 			// シーンの変更
