@@ -189,53 +189,17 @@ void GameScene::Initialize() {
 	enemySprite_[2] = Sprite::Create(enemyTextureHandle_[2], { 420,-15 });
 	enemySprite_[3] = Sprite::Create(enemyTextureHandle_[3], { 435,-38 });
 	
-	//画像生成
-	TextureHandle_[0] = TextureManager::Load("UI/0.png");
-	TextureHandle_[1] = TextureManager::Load("UI/1.png");
-	TextureHandle_[2] = TextureManager::Load("UI/2.png");
-	TextureHandle_[3] = TextureManager::Load("UI/3.png");
-	TextureHandle_[4] = TextureManager::Load("UI/4.png");
-	TextureHandle_[5] = TextureManager::Load("UI/5.png");
-	TextureHandle_[6] = TextureManager::Load("UI/6.png");
-	TextureHandle_[7] = TextureManager::Load("UI/7.png");
-	TextureHandle_[8] = TextureManager::Load("UI/8.png");
-	TextureHandle_[9] = TextureManager::Load("UI/9.png");
-	ArrowHandle_ = TextureManager::Load("UI/arrow.png");
+	// 0～9のテクスチャ読み込み
+	for (int i = 0; i < 10; i++) {
+		TextureHandle_[i] = TextureManager::Load("UI/" + std::to_string(i) + ".png");
+	}
 
-	//メダル用の数字生成
-	sprite_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
-	sprite_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
-	sprite_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
-	sprite_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
-	sprite_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
-	sprite_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
-	sprite_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
-	sprite_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
-	sprite_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
-	sprite_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
-
-	//ゲームカウント用の数字生成
-	medalSprite_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
-	medalSprite_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
-	medalSprite_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
-	medalSprite_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
-	medalSprite_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
-	medalSprite_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
-	medalSprite_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
-	medalSprite_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
-	medalSprite_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
-	medalSprite_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
-
-	EnemyGameSprite_[0] = Sprite::Create(TextureHandle_[0], { 0, 0 });
-	EnemyGameSprite_[1] = Sprite::Create(TextureHandle_[1], { 0, 0 });
-	EnemyGameSprite_[2] = Sprite::Create(TextureHandle_[2], { 0, 0 });
-	EnemyGameSprite_[3] = Sprite::Create(TextureHandle_[3], { 0, 0 });
-	EnemyGameSprite_[4] = Sprite::Create(TextureHandle_[4], { 0, 0 });
-	EnemyGameSprite_[5] = Sprite::Create(TextureHandle_[5], { 0, 0 });
-	EnemyGameSprite_[6] = Sprite::Create(TextureHandle_[6], { 0, 0 });
-	EnemyGameSprite_[7] = Sprite::Create(TextureHandle_[7], { 0, 0 });
-	EnemyGameSprite_[8] = Sprite::Create(TextureHandle_[8], { 0, 0 });
-	EnemyGameSprite_[9] = Sprite::Create(TextureHandle_[9], { 0, 0 });
+	// 短縮：sprite_、medalSprite_、EnemyGameSprite_ にまとめて生成
+	for (int i = 0; i < 10; i++) {
+		sprite_[i] = Sprite::Create(TextureHandle_[i], {0, 0});
+		medalSprite_[i] = Sprite::Create(TextureHandle_[i], {0, 0});
+		EnemyGameSprite_[i] = Sprite::Create(TextureHandle_[i], {0, 0});
+	}
 
 	// 矢印の生成
 	Arrow_ = Sprite::Create(ArrowHandle_, { 480, 380 });
@@ -373,6 +337,31 @@ void GameScene::Update() {
 			button1_->Press();
 			reel1_->StopRotation();
 			reel1IsStopped_ = true; // リール1を停止状態に設定
+
+			if (mode_ == 1) {
+				if (lever_->GetStorenum() == 97) {
+					int randNum = rand() % 50;// 強チェリーを引いたときランダムでプチュン
+					if (randNum == 0) {
+						puchun_->Start();
+						putyunMode = 1;
+					}
+				}
+				else if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <= 93) {
+					int randNum = rand() % 50;// スイカを引いたときランダムでプチュン
+					if (randNum == 0) {
+						puchun_->Start();
+						putyunMode = 1;
+					}
+				}
+				else if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <= 96) {
+					int randNum = rand() % 50;// 弱チェリーを引いたときランダムでプチュン
+					if (randNum == 0) {
+						puchun_->Start();
+						putyunMode = 1;
+					}
+				}
+			}
+
 			if (mode_ == 2) {
 				EnemyBONUSGameCount--; 
 			}
@@ -393,6 +382,7 @@ void GameScene::Update() {
 
 			canPullLever_ = false;
 			leverCooldownTimer_ = 0;
+
 
 			// ベル
 			if (lever_->GetStorenum() <= 30) {
@@ -434,6 +424,26 @@ void GameScene::Update() {
 				enemies.push_back(enemy2);
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
+
+				/*if (putyunMode == 1) {
+					if (isEnemyActive &&enemies[0]) {
+						enemies[0]->SetIsActive(false);
+						EnemyBONUSGameCount = 20;
+					}
+					else if (isEnemyActive  &&enemies[1]) {
+						enemies[1]->SetIsActive(false);
+						EnemyBONUSGameCount = 30;
+					}
+					else if (isEnemyActive &&enemies[2]) {
+						enemies[2]->SetIsActive(false);
+						EnemyBONUSGameCount = 40;
+					}
+					else if (isEnemyActive &&enemies[3]) {
+						enemies[3]->SetIsActive(false);
+						EnemyBONUSGameCount = 50;
+					}
+					isEnemyActive = false;
+				}*/
 
 				// 敵1を倒す抽選 (スイカ)
 				if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 500%の確率で敵を倒せる
@@ -505,6 +515,26 @@ void GameScene::Update() {
 				enemies.push_back(enemy2);
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
+
+			/*	if (putyunMode == 1) {
+					if (isEnemyActive &&enemies[0]) {
+						enemies[0]->SetIsActive(false);
+						EnemyBONUSGameCount = 20;
+					}
+					else if (isEnemyActive  &&enemies[1]) {
+						enemies[1]->SetIsActive(false);
+						EnemyBONUSGameCount = 30;
+					}
+					else if (isEnemyActive &&enemies[2]) {
+						enemies[2]->SetIsActive(false);
+						EnemyBONUSGameCount = 40;
+					}
+					else if (isEnemyActive &&enemies[3]) {
+						enemies[3]->SetIsActive(false);
+						EnemyBONUSGameCount = 50;
+					}
+					isEnemyActive = false;
+				}*/
 
 				// 敵1を倒す抽選 (弱チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
@@ -578,49 +608,51 @@ void GameScene::Update() {
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
 
-				if (putyunMode == 1) {
+				/*if (putyunMode == 1) {
+					isEnemyActive = false;
+
+					mode_ = 2;
 					if (isEnemyActive &&enemies[0]) {
 						enemies[0]->SetIsActive(false);
 						EnemyBONUSGameCount = 20;
 					}
-					else if (isEnemyActive  &&enemies[1]) {
+					if (isEnemyActive  &&enemies[1]) {
 						enemies[1]->SetIsActive(false);
 						EnemyBONUSGameCount = 30;
 					}
-					else if (isEnemyActive &&enemies[2]) {
+					if (isEnemyActive &&enemies[2]) {
 						enemies[2]->SetIsActive(false);
 						EnemyBONUSGameCount = 40;
 					}
-					else if (isEnemyActive &&enemies[3]) {
+					if (isEnemyActive &&enemies[3]) {
 						enemies[3]->SetIsActive(false);
 						EnemyBONUSGameCount = 50;
 					}
-					isEnemyActive = false;
-				}
+				}*/
 
 				// 敵1を倒す抽選 (強チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[0]->SetIsActive(false);
-					EnemyBONUSGameCount = 5;
+					EnemyBONUSGameCount = 20;
 				}
 				// 敵2を倒す抽選 (強チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[1]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[1]->SetIsActive(false);
-					EnemyBONUSGameCount = 5;
+					EnemyBONUSGameCount = 30;
 				}
 				// 敵3を倒す抽選 (強チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[2]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[2]->SetIsActive(false);
-					EnemyBONUSGameCount = 5;
+					EnemyBONUSGameCount = 40;
 				}
 				// 敵4を倒す抽選 (強チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[3]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[3]->SetIsActive(false);
-					EnemyBONUSGameCount = 5;
+					EnemyBONUSGameCount = 50;
 				}
 
 				if (rand() % 100 < 80) {  // 80%の確率で敵を出現させる
@@ -656,8 +688,6 @@ void GameScene::Update() {
 				}
 			}
 		}
-
-
 
 		// ゲームカウントを進める
 		if (isEnemyActive && !enemyDefeated) {
@@ -805,10 +835,12 @@ void GameScene::Draw() {
 			enemyGameCount--;
 		}
 
-		if (lever_->GetStorenum() == 150 && putyunMode == 0) {
+		/*if (lever_->GetStorenum() == 150 && putyunMode == 0) {
 			puchun_->Start();
 			putyunMode = 1;
-		}
+		}*/
+
+
 
 		if (putyunMode == 1) {
 			// 必要であれば敵も非アクティブに
@@ -975,36 +1007,6 @@ void GameScene::MedalDraw() {
 		x += spacing; // 画像の間隔
 	}
 }
-
-//void GameScene::EnemyGameDraw()
-//{
-//	//メダル数を最大5桁に制限
-//	if (Medal > 99999) {
-//		Medal = 99999; //6桁以上にならないようにする
-//	}
-//
-//	//メダル数を文字列に変換
-//	std::string countStr = std::to_string(Medal);
-//	size_t digitCount = countStr.length();
-//
-//	// 基準となる描画開始位置
-//	float baseX = 1230.0f, y = 190.0f;
-//	float spacing = 60.0f; // 画像の間隔
-//
-//	// 最小2桁はそのまま描画
-//	float x = baseX - (spacing * (digitCount - 1));
-//
-//	//各桁を対応する画像で描画
-//	for (size_t i = 0; i < digitCount; i++) {
-//		int index = countStr[i] - '0'; // 0～9 のインデックス
-//		if (index >= 0 && index < 10) {
-//			EnemyGameSprite_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
-//			EnemyGameSprite_[i]->SetPosition({ x, y }); // 位置を更新
-//			EnemyGameSprite_[i]->Draw(); // 描画
-//		}
-//		x += spacing; // 画像の間隔
-//	}
-//}
 
 void GameScene::SpawnCoins(int count) {
 	for (int i = 0; i < count; ++i) {

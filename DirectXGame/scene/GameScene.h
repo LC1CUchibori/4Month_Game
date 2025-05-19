@@ -151,7 +151,7 @@ private: // メンバ変数
 	bool reel3IsStopped_ = false;
 
 	//メダル
-	int Medal = 3;
+	int Medal = 0;
 	//目標メダル
 	int targetMedal = 0;
 	//メダル増加にかかる時間
