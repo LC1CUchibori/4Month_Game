@@ -20,6 +20,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include <Coin.h>
+#include <BONUS.h>
 
 /// <summary>
 /// ゲームシーン
@@ -129,6 +130,10 @@ private: // メンバ変数
 	Slot* MoneyBox_ = nullptr;
 	Model* modelMoneyBox_ = nullptr;
 
+	// BONUS図柄
+	BONUS* BONUS_ = nullptr;
+	Model* modelBONUS_ = nullptr;
+
 	//背景メダルモデル
 	Model* modelCoin_ = nullptr;
 	std::list<Coin*> coins_;
@@ -142,7 +147,6 @@ private: // メンバ変数
 	Enemy* enemy2 = nullptr;  // 敵2
 	Enemy* enemy3 = nullptr;  // 敵3
 	Enemy* enemy4 = nullptr;  // 敵4
-
 
 	Puchun* puchun_ = nullptr;
 
@@ -269,7 +273,9 @@ private: // メンバ変数
 
 	bool canPullLever_ = true;       // レバーを引けるかどうか
 	int leverCooldownTimer_ = 0;     // レバーの待機時間タイマー
-	const int kLeverCooldownMax = 60; // 2秒間（60FPSなら120フレーム）
+	const int kLeverCooldownMax = 95; // 2秒間（60FPSなら120フレーム）
+
+	int BONUSMedal = 0;
 
 	int gameCount = 0;
 	bool isEnemyActive = false;  // 敵が出現したかどうか

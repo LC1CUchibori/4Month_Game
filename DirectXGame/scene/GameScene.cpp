@@ -165,6 +165,10 @@ void GameScene::Initialize() {
 	// 投入機の初期化
 	MoneyBox_->Initialize(modelMoneyBox_, &viewProjection_);
 
+	modelBONUS_ = Model::CreateFromOBJ("BONUS", true);
+	BONUS_ = new BONUS();
+	BONUS_->Initialize(modelBONUS_, &viewProjection_);
+
 	// プレイヤーのインスタンス化
 	player = new Player();
 	// プレイヤー生成
@@ -236,6 +240,8 @@ void GameScene::Update() {
 	button3_->Update();
 
 	pushButton_->Update();
+
+	BONUS_->Update();
 
 	puchun_->Update();
 
@@ -340,7 +346,7 @@ void GameScene::Update() {
 
 			if (mode_ == 1) {
 				if (lever_->GetStorenum() == 97) {
-					int randNum = rand() % 50;// 強チェリーを引いたときランダムでプチュン
+					int randNum = rand() % 30;// 強チェリーを引いたときランダムでプチュン
 					if (randNum == 0) {
 						puchun_->Start();
 						putyunMode = 1;
@@ -404,12 +410,16 @@ void GameScene::Update() {
 
 			// 赤7
 			if (lever_->GetStorenum() == 301) {
-				targetMedal += 15;
+				targetMedal = Medal + 15;
+				animating = true;
+				BONUSMedal = 0;
 			}
 
 			// 青7
 			if (lever_->GetStorenum() == 302) {
-				targetMedal += 15;
+				targetMedal = Medal + 15;
+				animating = true;
+				BONUSMedal = 0;
 			}
 
 			// --------------------------------------------------- スイカ --------------------------------------
@@ -424,26 +434,6 @@ void GameScene::Update() {
 				enemies.push_back(enemy2);
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
-
-				/*if (putyunMode == 1) {
-					if (isEnemyActive &&enemies[0]) {
-						enemies[0]->SetIsActive(false);
-						EnemyBONUSGameCount = 20;
-					}
-					else if (isEnemyActive  &&enemies[1]) {
-						enemies[1]->SetIsActive(false);
-						EnemyBONUSGameCount = 30;
-					}
-					else if (isEnemyActive &&enemies[2]) {
-						enemies[2]->SetIsActive(false);
-						EnemyBONUSGameCount = 40;
-					}
-					else if (isEnemyActive &&enemies[3]) {
-						enemies[3]->SetIsActive(false);
-						EnemyBONUSGameCount = 50;
-					}
-					isEnemyActive = false;
-				}*/
 
 				// 敵1を倒す抽選 (スイカ)
 				if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 500%の確率で敵を倒せる
@@ -516,25 +506,6 @@ void GameScene::Update() {
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
 
-			/*	if (putyunMode == 1) {
-					if (isEnemyActive &&enemies[0]) {
-						enemies[0]->SetIsActive(false);
-						EnemyBONUSGameCount = 20;
-					}
-					else if (isEnemyActive  &&enemies[1]) {
-						enemies[1]->SetIsActive(false);
-						EnemyBONUSGameCount = 30;
-					}
-					else if (isEnemyActive &&enemies[2]) {
-						enemies[2]->SetIsActive(false);
-						EnemyBONUSGameCount = 40;
-					}
-					else if (isEnemyActive &&enemies[3]) {
-						enemies[3]->SetIsActive(false);
-						EnemyBONUSGameCount = 50;
-					}
-					isEnemyActive = false;
-				}*/
 
 				// 敵1を倒す抽選 (弱チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
@@ -608,27 +579,7 @@ void GameScene::Update() {
 				enemies.push_back(enemy3);
 				enemies.push_back(enemy4);
 
-				/*if (putyunMode == 1) {
-					isEnemyActive = false;
-
-					mode_ = 2;
-					if (isEnemyActive &&enemies[0]) {
-						enemies[0]->SetIsActive(false);
-						EnemyBONUSGameCount = 20;
-					}
-					if (isEnemyActive  &&enemies[1]) {
-						enemies[1]->SetIsActive(false);
-						EnemyBONUSGameCount = 30;
-					}
-					if (isEnemyActive &&enemies[2]) {
-						enemies[2]->SetIsActive(false);
-						EnemyBONUSGameCount = 40;
-					}
-					if (isEnemyActive &&enemies[3]) {
-						enemies[3]->SetIsActive(false);
-						EnemyBONUSGameCount = 50;
-					}
-				}*/
+				
 
 				// 敵1を倒す抽選 (強チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
@@ -777,6 +728,12 @@ void GameScene::Draw() {
 
 	// 投入機
 	MoneyBox_->Draw();
+
+	if (mode_ == 2) {
+		BONUS_->StartBonus();
+		// BONUS図柄
+		BONUS_->Draw();
+	}
 
 	// ボタン1
 	button2_->Draw();
@@ -940,6 +897,12 @@ void GameScene::UpdateMedal(float deltaTime) {
 			timeElapsed = 0.0f; // 経過時間をリセット
 			if (Medal < targetMedal) {
 				Medal++; // メダルを1増加
+				BONUSMedal++;
+
+				if (lever_->GetStorenum() >= 301 && BONUSMedal <= 7) {
+					Medal++;
+				}
+
 				// コインを1個ずつ出す
 				SpawnCoins(1);
 			}

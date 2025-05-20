@@ -3,6 +3,8 @@
 #include "ヘッダーファイル/Reel2.h"
 #include "ヘッダーファイル/Reel3.h"
 
+class GameScene;
+
 class Slot
 {
 public:
@@ -37,7 +39,10 @@ private:
     // 投入機のモデル
     Model* modelMoneyBox_ = nullptr;
 
+    Model* modelBONUS_ = nullptr;
+
     Reel* reel1_;
     Reel* reel2_;
     Reel* reel3_;
+ 
 };

@@ -1,23 +1,28 @@
 ﻿#include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "GameScene.h"
 #include "ヘッダーファイル/Slot.h"
 
-void Slot::Initialize(Model *model, ViewProjection* viewProjection)
+void Slot::Initialize(Model* model, ViewProjection* viewProjection)
 {
-	worldTransform_.Initialize(); 
-	model_ = model;
-	viewProjection_ = viewProjection;
+    worldTransform_.Initialize(); 
+    model_ = model;
+    viewProjection_ = viewProjection;
+   
 
-	modelLeverParts_ = model;
+    modelLeverParts_ = model;
 
     modelMedalCountButton_ = model;
 
     modelMoneyBox_ = model;
+
+    modelBONUS_ = model;
 }
 
 void Slot::Update()
 {
+    
 }
 
 void Slot::Draw()
@@ -29,7 +34,7 @@ void Slot::Draw()
     // メダルカウントボタン
     modelMedalCountButton_->Draw(worldTransform_, *viewProjection_);
     // 投入機
-   // modelMoneyBox_->Draw(worldTransform_, *viewProjection_);
+    modelMoneyBox_->Draw(worldTransform_, *viewProjection_);
 }
 
 bool Slot::CheckHorizontal()
