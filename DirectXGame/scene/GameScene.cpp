@@ -930,7 +930,7 @@ void GameScene::DrawGameCount() {
 
 	// 基準となる描画開始位置
 	float x = 1230.0f, y = 10.0;
-	float spacing = 65.0f; // 画像の間隔
+	float spacing = 50.0f; // 画像の間隔
 
 	//各桁を対応する画像で描画
 	for (size_t i = 0; i < digitCount; i++) {
@@ -957,7 +957,7 @@ void GameScene::MedalDraw() {
 
 	// 基準となる描画開始位置
 	float baseX = 1230.0f, y = 100.0f;
-	float spacing = 60.0f; // 画像の間隔
+	float spacing = 50.0f; // 画像の間隔
 
 	// 最小2桁はそのまま描画
 	float x = baseX - (spacing * (digitCount - 1));
@@ -983,6 +983,7 @@ void GameScene::SpawnCoins(int count) {
 		coins_.push_back(coin);
 	}
 }
+
 
 void GameScene::MoneyDraw() {
 	// 所持金の上限設定（最大6桁 = 999999）
