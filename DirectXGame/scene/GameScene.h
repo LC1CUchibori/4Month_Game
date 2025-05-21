@@ -64,6 +64,8 @@ public: // メンバ関数
 
 	void EnemyGameDraw();
 
+	void MoneyDraw();
+
 	//クリアフラグのgetter
 	bool IsCleared() const { return cleared_; }
 
@@ -204,6 +206,8 @@ private: // メンバ変数
 	Sprite* EnemyGameSprite_[10];
 	//テクスチャハンドル
 	uint32_t TextureHandle_[10];
+	// 残金
+	Sprite* MoneySprite_[10];
 
 	// 矢印
 	Sprite *Arrow_ = 0;
@@ -289,4 +293,6 @@ private: // メンバ変数
 
 	// 所持金
 	int MaxMoney = 4600;
+	int money_ = 100000; // 初期所持金
+	int prevMaxMoney_ = 4600; // 前フレームの MaxMoney を保持
 };

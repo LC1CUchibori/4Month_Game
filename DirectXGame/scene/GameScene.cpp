@@ -203,6 +203,7 @@ void GameScene::Initialize() {
 		sprite_[i] = Sprite::Create(TextureHandle_[i], {0, 0});
 		medalSprite_[i] = Sprite::Create(TextureHandle_[i], {0, 0});
 		EnemyGameSprite_[i] = Sprite::Create(TextureHandle_[i], {0, 0});
+		MoneySprite_[i] = Sprite::Create(TextureHandle_[i], { 0,0 });
 	}
 
 	// 矢印の生成
@@ -219,6 +220,8 @@ void GameScene::Initialize() {
 		TextureManager::Load("Puchun/Puchun5.png"), TextureManager::Load("Puchun/Puchun6.png"), TextureManager::Load("Puchun/Puchun7.png") };
 	puchun_ = new Puchun();
 	puchun_->Initialize(puchunTextures, audio_);
+
+	prevMaxMoney_ = MaxMoney;
 }
 
 void GameScene::Update() {
@@ -763,8 +766,8 @@ void GameScene::Draw() {
 	// メダルの数を描画
 	MedalDraw();
 
-	// 敵ゲーム数
-	//EnemyGameDraw();
+	// 残金描画
+	MoneyDraw();
 
 	// 矢印を描画
 	Arrow_->Draw();
@@ -978,5 +981,46 @@ void GameScene::SpawnCoins(int count) {
 		coin->SetRandomBehavior();
 		coin->SetAudio(audio_, DropCoinSE_);
 		coins_.push_back(coin);
+	}
+}
+
+void GameScene::MoneyDraw() {
+	// 所持金の上限設定（最大6桁 = 999999）
+	if (money_ > 999999) {
+		money_ = 999999;
+	}
+
+	// 所持金を文字列に変換
+	std::string moneyStr = std::to_string(money_);
+	size_t digitCount = moneyStr.length();
+
+	// 描画開始位置（右寄せ）
+	float baseX = 1230.0f, y = 200.0f; // メダルとはy座標を少しずらす
+	float spacing = 50.0f;
+	float x = baseX - (spacing * (digitCount - 1));
+
+	// 数字ごとに対応する画像を描画
+	for (size_t i = 0; i < digitCount; i++) {
+		int index = moneyStr[i] - '0';
+		if (index >= 0 && index < 10) {
+			MoneySprite_[i]->SetTextureHandle(TextureHandle_[index]);
+			MoneySprite_[i]->SetPosition({ x, y });
+			MoneySprite_[i]->Draw();
+		}
+		x += spacing;
+	}
+
+	// MaxMoney が前フレームから46減っていたら、money_ を1000減らす
+	if (prevMaxMoney_ - MaxMoney >= 46) {
+		int numOf46s = (prevMaxMoney_ - MaxMoney) / 46;
+		money_ -= 1000 * numOf46s;
+
+		// 上限を下回らないように調整
+		if (money_ < 0) {
+			money_ = 0;
+		}
+
+		// prevMaxMoney_ を更新（1度に複数回分減っている場合も対応）
+		prevMaxMoney_ = MaxMoney;
 	}
 }
