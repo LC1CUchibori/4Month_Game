@@ -296,7 +296,7 @@ void GameScene::Update() {
 		Vector2 v = Input::GetInstance()->GetMousePosition();
 
 		//緑の投入口の判定処理
-		if (v.x >= 700 && v.x <= 780 && v.y >= 440 && v.y <= 455&& MaxMoney >= 46) {
+		if (v.x >= 910 && v.x <= 940 && v.y >= 370 && v.y <= 400&& MaxMoney >= 46) {
 			MaxMoney -= 46;
 			Medal += 46;
 		}
@@ -361,7 +361,7 @@ void GameScene::Update() {
 
 			if (mode_ == 1) {
 				if (lever_->GetStorenum() == 97) {
-					int randNum = rand() % 1;// 強チェリーを引いたときランダムでプチュン
+					int randNum = rand() % 30;// 強チェリーを引いたときランダムでプチュン
 					if (randNum == 0) {
 						pushButton_->SetToggle(true); 
 						isWaitingForPush = true;
