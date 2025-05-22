@@ -361,10 +361,18 @@ void GameScene::Update() {
 
 			if (mode_ == 1) {
 				if (lever_->GetStorenum() == 97) {
-					int randNum = rand() % 30;// 強チェリーを引いたときランダムでプチュン
+					int randNum = rand() % 1;// 強チェリーを引いたときランダムでプチュン
 					if (randNum == 0) {
+						pushButton_->SetToggle(true); 
+						isWaitingForPush = true;
+					}
+				}
+				if (isWaitingForPush) {
+					if (pushButton_->WasJustPressed()) {
 						puchun_->Start();
 						putyunMode = 1;
+						pushButton_->SetToggle(false); 
+					
 					}
 				}
 				else if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <= 93) {

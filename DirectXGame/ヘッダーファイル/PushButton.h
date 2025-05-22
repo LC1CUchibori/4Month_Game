@@ -10,6 +10,14 @@ public:
     void Update();
     void Draw();
 
+    bool WasJustPressed() const { return Input::GetInstance()->PushKey(DIK_1); }
+
+    void SetToggle(bool state);
+
+    bool IsToggled() const {
+        return toggleState_;
+    }
+
 private:
     WorldTransform worldTransform_;
     Model* model_ = nullptr;

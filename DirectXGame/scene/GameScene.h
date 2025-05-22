@@ -302,4 +302,6 @@ private: // メンバ変数
 	int MaxMoney = 4600;
 	int money_ = 100000; // 初期所持金
 	int prevMaxMoney_ = 4600; // 前フレームの MaxMoney を保持
+
+	bool isWaitingForPush = false;
 };
