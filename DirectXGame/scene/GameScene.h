@@ -21,6 +21,7 @@
 #include "Player.h"
 #include <Coin.h>
 #include <BONUS.h>
+#include <Title.h>
 
 /// <summary>
 /// ゲームシーン
@@ -135,6 +136,12 @@ private: // メンバ変数
 	// BONUS図柄
 	BONUS* BONUS_ = nullptr;
 	Model* modelBONUS_ = nullptr;
+
+	//タイトル
+	Title* title_ = nullptr;
+	//タイトルモデル
+	Model* modelTitile_Normal_ = nullptr;
+	Model* modelTitile_White_ = nullptr;
 
 	//背景メダルモデル
 	Model* modelCoin_ = nullptr;

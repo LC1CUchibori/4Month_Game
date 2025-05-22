@@ -43,4 +43,5 @@ private:
 	//音声再生ハンドル
 	uint32_t voiceHandle1_ = 0u;
 	uint32_t voiceHandle2_ = 0u;
+
 };

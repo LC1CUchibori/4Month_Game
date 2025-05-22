@@ -115,6 +115,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Puchun.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="ソースファイル\GameClear.cpp" />
     <ClCompile Include="ソースファイル\GameOver.cpp" />
     <ClCompile Include="ソースファイル\PushButton.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Puchun.h" />
     <ClInclude Include="rand.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="ヘッダーファイル\GameClear.h" />
     <ClInclude Include="ヘッダーファイル\GameOver.h" />
     <ClInclude Include="ヘッダーファイル\PushButton.h" />

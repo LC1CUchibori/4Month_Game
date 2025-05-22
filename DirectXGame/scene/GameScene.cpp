@@ -169,6 +169,15 @@ void GameScene::Initialize() {
 	BONUS_ = new BONUS();
 	BONUS_->Initialize(modelBONUS_, &viewProjection_);
 
+	modelTitile_Normal_ = Model::CreateFromOBJ("Title", true);
+	//modelTitile_White_ = Model::CreateFromOBJ("TitleWhite", true);
+	// タイトルの生成
+	title_ = new Title();
+	// 位置
+	Vector3 position = { 0.5f, 12.0f, -5.0f };
+	// タイトルの初期化
+	title_->Initialize(modelTitile_Normal_, modelTitile_White_, &viewProjection_, position);
+
 	// プレイヤーのインスタンス化
 	player = new Player();
 	// プレイヤー生成
@@ -249,6 +258,9 @@ void GameScene::Update() {
 	puchun_->Update();
 
 	player->Update();
+
+	// タイトル更新
+	title_->Update();
 
 	UpdateMedal(0.02f);
 
@@ -744,6 +756,9 @@ void GameScene::Draw() {
 	button3_->Draw();
 	// ボタン3
 	button1_->Draw();
+
+	// タイトル描画
+	title_->Draw();
 
 	// Pushボタン
 	pushButton_->Draw();
