@@ -296,7 +296,7 @@ void GameScene::Update() {
 		Vector2 v = Input::GetInstance()->GetMousePosition();
 
 		//緑の投入口の判定処理
-		if (v.x >= 910 && v.x <= 940 && v.y >= 370 && v.y <= 400&& MaxMoney >= 46) {
+		if (v.x >= 900 && v.x <= 940 && v.y >= 370 && v.y <= 400&& MaxMoney >= 46) {
 			MaxMoney -= 46;
 			Medal += 46;
 		}
@@ -361,32 +361,24 @@ void GameScene::Update() {
 
 			if (mode_ == 1) {
 				if (lever_->GetStorenum() == 97) {
-					int randNum = rand() % 30;// 強チェリーを引いたときランダムでプチュン
+					int randNum = rand() % 1;// 強チェリーを引いたときランダムでプチュン
 					if (randNum == 0) {
 						pushButton_->SetToggle(true); 
 						isWaitingForPush = true;
 					}
 				}
-				if (isWaitingForPush) {
-					if (pushButton_->WasJustPressed()) {
-						puchun_->Start();
-						putyunMode = 1;
-						pushButton_->SetToggle(false); 
-					
-					}
-				}
 				else if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <= 93) {
 					int randNum = rand() % 50;// スイカを引いたときランダムでプチュン
 					if (randNum == 0) {
-						puchun_->Start();
-						putyunMode = 1;
+						pushButton_->SetToggle(true); 
+						isWaitingForPush = true;
 					}
 				}
 				else if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <= 96) {
 					int randNum = rand() % 50;// 弱チェリーを引いたときランダムでプチュン
 					if (randNum == 0) {
-						puchun_->Start();
-						putyunMode = 1;
+						pushButton_->SetToggle(true); 
+						isWaitingForPush = true;
 					}
 				}
 			}
@@ -689,6 +681,16 @@ void GameScene::Update() {
 	}
 
 #pragma endregion
+
+
+	if (isWaitingForPush) {
+		if (pushButton_->WasJustPressed()) {
+			puchun_->Start();
+			putyunMode = 1;
+			pushButton_->SetToggle(false); 
+
+		}
+	}
 }
 
 void GameScene::Draw() {
