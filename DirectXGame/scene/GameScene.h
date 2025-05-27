@@ -16,6 +16,7 @@
 #include "ヘッダーファイル/Lever.h"
 #include "ヘッダーファイル/Button.h"
 #include "ヘッダーファイル/PushButton.h"
+#include "ヘッダーファイル/GameClear.h"
 #include "Puchun.h"
 #include "Enemy.h"
 #include "Player.h"
@@ -77,6 +78,7 @@ public: // メンバ関数
 
 	int Getmode() { return mode_; }
 
+	int LastMedal()const { return  Medal; }
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -143,6 +145,8 @@ private: // メンバ変数
 	//タイトルモデル
 	Model* modelTitile_Normal_ = nullptr;
 	Model* modelTitile_White_ = nullptr;
+
+	GameClear* gameClear_ = nullptr;
 
 	//背景メダルモデル
 	Model* modelCoin_ = nullptr;

@@ -185,6 +185,7 @@ void GameScene::Initialize() {
 	// プレイヤースプライト
 	playerSprite_ = Sprite::Create(playerTextureHandle_, { 340,35 });
 
+
 	// 敵のインスタンス化
 	enemy1 = new Enemy();
 	enemy2 = new Enemy();
@@ -671,15 +672,6 @@ void GameScene::Update() {
 			pressCount = 0;         // カウントもリセット
 		}
 	}
-#pragma endregion
-
-#pragma region 勝つ・負ける条件の処理
-
-	//メダルの数が一定数超えたらクリア
-	if (Medal >= 1000) {
-		cleared_ = true;
-	}
-
 #pragma endregion
 
 
