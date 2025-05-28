@@ -5,6 +5,10 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include <LeftDoor.h>
+#include <RightDoor.h>
+#include <Pachinko.h>
+
 
 class TitleScene {
 public:
@@ -29,7 +33,7 @@ private:
 	ViewProjection viewProjection_;
 	//タイトルシーン
 	TitleScene* titleScene_ = nullptr;
-	
+
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 
@@ -43,5 +47,22 @@ private:
 	//音声再生ハンドル
 	uint32_t voiceHandle1_ = 0u;
 	uint32_t voiceHandle2_ = 0u;
+
+	//パチンコ店
+	LeftDoor* leftDoor_ = nullptr;
+	Model* leftDoorModel_ = nullptr;
+
+	RightDoor* rightDoor_ = nullptr;
+	Model* rightDoorModel_ = nullptr;
+
+	Pachinko* pachinko_ = nullptr;
+	Model* pachinkoModel_ = nullptr;
+
+	// TitleScene.h などに追加
+	float currentVolume_ = 0.1f;          // 初期音量（0.1）
+	float targetVolume_ = 1.0f;           // 目標音量（最大1.0）
+	float volumeIncreaseSpeed_ = 0.01f;   // 1フレームごとの音量増加量
+	bool isIncreasingVolume_ = false;     // 音量上昇フラグ
+
 
 };

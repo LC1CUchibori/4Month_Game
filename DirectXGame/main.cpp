@@ -39,6 +39,10 @@ void DrawScene();
 bool isTabPressed = false;
 bool isLeftSelected = false;
 
+bool isChangeToGameRequested = false;
+float changeToGameTimer = 0.0f;
+
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
@@ -143,15 +147,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 void ChangeScene() {
 	switch (scene) {
 	case Scene::kTitle:
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			// シーンの変更
-			scene = Scene::kGame;
-			// 旧シーンの解放
-			delete titleScene;
-			titleScene = nullptr;
-			// 新シーンの生成と初期化
-			gameScene = new GameScene();
-			gameScene->Initialize();
+		// Enterキーで遷移リクエスト
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isChangeToGameRequested) {
+			isChangeToGameRequested = true;
+			changeToGameTimer = 0.0f;
+		}
+
+		// 遷移リクエスト中
+		if (isChangeToGameRequested) {
+			changeToGameTimer += 1.0f / 60.0f; // フレームレート60FPS想定
+
+			if (changeToGameTimer >= 3.0f) {
+				// シーンの変更
+				scene = Scene::kGame;
+				// 旧シーンの解放
+				delete titleScene;
+				titleScene = nullptr;
+				// 新シーンの生成と初期化
+				gameScene = new GameScene();
+				gameScene->Initialize();
+
+				// リセット
+				isChangeToGameRequested = false;
+				changeToGameTimer = 0.0f;
+			}
 		}
 		break;
 	case Scene::kGame:

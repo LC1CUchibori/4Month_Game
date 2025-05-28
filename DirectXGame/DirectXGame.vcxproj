@@ -113,8 +113,12 @@
     <ClCompile Include="BONUS.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="LeftDoor.cpp" />
+    <ClCompile Include="MathUtilityForText.cpp" />
+    <ClCompile Include="Pachinko.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Puchun.cpp" />
+    <ClCompile Include="RightDoor.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="ソースファイル\GameClear.cpp" />
     <ClCompile Include="ソースファイル\GameOver.cpp" />
@@ -158,9 +162,13 @@
     <ClInclude Include="BONUS.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="LeftDoor.h" />
+    <ClInclude Include="MathUtilityForText.h" />
+    <ClInclude Include="Pachinko.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Puchun.h" />
     <ClInclude Include="rand.h" />
+    <ClInclude Include="RightDoor.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="ヘッダーファイル\GameClear.h" />
     <ClInclude Include="ヘッダーファイル\GameOver.h" />
