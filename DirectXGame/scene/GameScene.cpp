@@ -455,25 +455,25 @@ void GameScene::Update() {
 				if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 500%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[0]->SetIsActive(false);
-					EnemyBONUSGameCount = 50;
+					EnemyBONUSGameCount = 20;
 				}
 				// 敵2を倒す抽選 (スイカ)
 				if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1 && enemies[1]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[1]->SetIsActive(false);
-					EnemyBONUSGameCount = 40;
+					EnemyBONUSGameCount = 30;
 				}
 				// 敵3を倒す抽選 (スイカ)
 				if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1 && enemies[2]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[2]->SetIsActive(false);
-					EnemyBONUSGameCount = 30;
+					EnemyBONUSGameCount = 40;
 				}
 				// 敵4を倒す抽選 (スイカ)
 				if (isEnemyActive == true && rand() % 100 < 100 && mode_ == 1 && enemies[3]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;
 					enemies[3]->SetIsActive(false);
-					EnemyBONUSGameCount = 20;
+					EnemyBONUSGameCount = 50;
 				}
 
 				if (rand() % 100 < 50) {  // 50%の確率で敵を出現させる
@@ -498,7 +498,7 @@ void GameScene::Update() {
 					}
 
 					// 選ばれた敵を描画
-					if (selected_enemy_index != -1) {
+					if (selected_enemy_index != -1&& mode_ == 0) {
 						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
 						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
 						isEnemyActive = true;
@@ -570,12 +570,11 @@ void GameScene::Update() {
 					}
 
 					// 選ばれた敵を描画
-					if (selected_enemy_index != -1) {
+					if (selected_enemy_index != -1&& mode_ == 0) {
 						enemies[selected_enemy_index]->Initialize();  // 敵を初期化
 						enemies[selected_enemy_index]->SetIsActive(true);  // 敵をアクティブにする
 						isEnemyActive = true;
 					}
-
 					if (mode_ == 0) {
 						mode_ = 1;
 					}
@@ -596,7 +595,6 @@ void GameScene::Update() {
 				enemies.push_back(enemy4);
 
 				
-
 				// 敵1を倒す抽選 (強チェリー)
 				if (isEnemyActive && rand() % 100 < 100 && mode_ == 1 && enemies[0]) {  // 100%の確率で敵を倒せる
 					isEnemyActive = false;

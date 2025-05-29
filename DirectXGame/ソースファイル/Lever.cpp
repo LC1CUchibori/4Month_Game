@@ -31,7 +31,7 @@ void Lever::Update(int &medal,int&gameCount,bool&isFreePlay, bool canPullLever)
         isRotating1_ == false && isRotating2_ == false && isRotating3_ == false&&mode_->Getmode()==0) {
             voiceHandle_ = audio_->PlayWave(LEVER, false);
             downTimer_ = DownTime;
-            storenum = rng.GetRandamNumber(97, 97);
+            storenum = rng.GetRandamNumber(1, 301);
            
 
             gameCount += 1;
@@ -46,7 +46,7 @@ void Lever::Update(int &medal,int&gameCount,bool&isFreePlay, bool canPullLever)
         isRotating1_ == false && isRotating2_ == false && isRotating3_ == false&&mode_->Getmode()==1) {
         voiceHandle_ = audio_->PlayWave(LEVER, false);
         downTimer_ = DownTime;
-        storenum = rng.GetRandamNumber(1, 301);
+        storenum = rng.GetRandamNumber(1, 150);
 
 
         gameCount += 1;
@@ -60,7 +60,7 @@ void Lever::Update(int &medal,int&gameCount,bool&isFreePlay, bool canPullLever)
         isRotating1_ == false && isRotating2_ == false && isRotating3_ == false&&mode_->Getmode()==2) {
         voiceHandle_ = audio_->PlayWave(LEVER, false);
         downTimer_ = DownTime;
-        storenum = rng.GetRandamNumber(1, 200);
+        storenum = rng.GetRandamNumber(301, 302);
 
 
         gameCount += 1;
@@ -75,7 +75,7 @@ void Lever::Update(int &medal,int&gameCount,bool&isFreePlay, bool canPullLever)
         isRotating1_ == false && isRotating2_ == false && isRotating3_ == false) {
         voiceHandle_ = audio_->PlayWave(LEVER, false);
         downTimer_ = DownTime;
-        storenum = rng.GetRandamNumber(150, 150);
+        storenum = rng.GetRandamNumber(0, 300);
 
         gameCount += 1;
     }
