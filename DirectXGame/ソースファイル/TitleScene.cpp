@@ -4,6 +4,10 @@
 
 TitleScene::~TitleScene() { 
 	delete sprite_;
+	for (auto& sprite : numberSprite_) {
+		delete sprite;
+	}
+	
 
 	// 音源停止
 	//audio_->StopWave(voiceHandle1_);
@@ -19,7 +23,7 @@ void TitleScene::Initialize() {
 	worldTransfrom_.scale_ = {2, 2, 2};
 
 	//ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("Title4.png");
+	textureHandle_ = TextureManager::Load("TitleBG.png");
 
 	//BGM・SE読み込み
 	GameStart = audio_->LoadWave("BGM/GameStart.wav");
@@ -50,6 +54,21 @@ void TitleScene::Initialize() {
 
 	pachinko_ = new Pachinko();
 	pachinko_->Initialize(pachinkoModel_, &viewProjection_);
+
+	// 0～9のテクスチャ読み込み
+	for (int i = 0; i < 10; i++) {
+		numberTextureHandles_[i] = TextureManager::Load("UI/" + std::to_string(i) + ".png");
+	}
+
+	for (int i = 0; i < 10; i++) {
+		numberSprite_[i] = Sprite::Create(numberTextureHandles_[i], { 0, 0 });
+	}
+
+	// 最初のランダム数生成
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_int_distribution<int> dist(0, 999); // 0〜999の範囲
+	randomNumber_ = dist(mt);
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -87,7 +106,33 @@ void TitleScene::Draw() {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 	//背景スプライト描画前処理
 	Sprite::PreDraw(commandList);
+
+	// 背景
 	sprite_->Draw();
+	int number = (randomNumber_ < 99999) ? randomNumber_ : 99999;
+	std::string numStr = std::to_string(number);
+	size_t digitCount = numStr.length();
+
+	float baseX = 850.0f; // 画面中心基準に変更（仮に1280x720なら中央は640）
+	float y = 540.0f;
+	float spacing = 52.0f;
+
+	// 中央に寄せるために、表示の開始X座標を調整
+	float totalWidth = spacing * digitCount;
+	float x = baseX - (totalWidth / 2.0f) + (spacing / 2.0f);
+
+	for (size_t i = 0; i < digitCount; ++i) {
+		int digit = numStr[i] - '0';
+		if (digit >= 0 && digit < 10 && i < 10) {
+			numberSprite_[i]->SetTextureHandle(numberTextureHandles_[digit]);
+			numberSprite_[i]->SetPosition({x, y});
+			numberSprite_[i]->SetSize({ 48.0f, 64.0f });
+			numberSprite_[i]->Draw();
+		}
+		x += spacing;
+	}
+
+
 	//スプライト描画後処理
 	Sprite::PostDraw();
 	//深度バッファクリア

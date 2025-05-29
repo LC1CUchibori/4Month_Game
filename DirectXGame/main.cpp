@@ -196,17 +196,19 @@ void ChangeScene() {
 			scene = Scene::kGameCler;
 			// 旧シーンの解放
 			delete gameScene;
+			int currentMedals = gameScene->GetMedalCount();
 			gameScene = nullptr;
 			// 新シーンの生成と初期化
 			gameClear = new GameClear();
 			gameClear->Initialize();
+			gameClear->SetMedalCount(currentMedals);
 
 			isTabPressed = false;
 			isLeftSelected = false;
 		}
 		break;
 	case Scene::kGameCler:
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+		if (Input::GetInstance()->TriggerKey(DIK_RETURN)) {
 			// シーンの変更
 			scene = Scene::kTitle;
 			// 旧シーンの解放

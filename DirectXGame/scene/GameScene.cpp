@@ -362,21 +362,21 @@ void GameScene::Update() {
 
 			if (mode_ == 1) {
 				if (lever_->GetStorenum() == 97) {
-					int randNum = rand() % 1;// 強チェリーを引いたときランダムでプチュン
+					int randNum = rand() % 50;// 強チェリーを引いたときランダムでプチュン
 					if (randNum == 0) {
 						pushButton_->SetToggle(true); 
 						isWaitingForPush = true;
 					}
 				}
 				else if (lever_->GetStorenum() >= 91 && lever_->GetStorenum() <= 93) {
-					int randNum = rand() % 50;// スイカを引いたときランダムでプチュン
+					int randNum = rand() % 40;// スイカを引いたときランダムでプチュン
 					if (randNum == 0) {
 						pushButton_->SetToggle(true); 
 						isWaitingForPush = true;
 					}
 				}
 				else if (lever_->GetStorenum() >= 94 && lever_->GetStorenum() <= 96) {
-					int randNum = rand() % 50;// 弱チェリーを引いたときランダムでプチュン
+					int randNum = rand() % 30;// 弱チェリーを引いたときランダムでプチュン
 					if (randNum == 0) {
 						pushButton_->SetToggle(true); 
 						isWaitingForPush = true;
@@ -946,7 +946,7 @@ void GameScene::DrawGameCount() {
 	size_t digitCount = countStr.length();
 
 	// 基準となる描画開始位置
-	float x = 1230.0f, y = 10.0;
+	float x = 1230.0f, y = 8.0;
 	float spacing = 50.0f; // 画像の間隔
 
 	//各桁を対応する画像で描画
@@ -973,7 +973,7 @@ void GameScene::MedalDraw() {
 	size_t digitCount = countStr.length();
 
 	// 基準となる描画開始位置
-	float baseX = 1230.0f, y = 100.0f;
+	float baseX = 1230.0f, y = 100.8f;
 	float spacing = 50.0f; // 画像の間隔
 
 	// 最小2桁はそのまま描画

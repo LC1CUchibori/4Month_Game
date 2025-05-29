@@ -78,7 +78,8 @@ public: // メンバ関数
 
 	int Getmode() { return mode_; }
 
-	int LastMedal()const { return  Medal; }
+	// 現在のメダル枚数を取得するゲッター関数
+	int GetMedalCount() const { return Medal; } 
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;

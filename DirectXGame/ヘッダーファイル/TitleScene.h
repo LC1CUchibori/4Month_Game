@@ -9,6 +9,11 @@
 #include <RightDoor.h>
 #include <Pachinko.h>
 
+#include <random>      // 乱数
+#include <string>      // 文字列変換
+#include <sstream>     // 数値を文字列に変換
+#include <algorithm>
+
 
 class TitleScene {
 public:
@@ -36,9 +41,16 @@ private:
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
+	// 抽選番号テクスチャハンドル
+	uint32_t numberTextureHandles_[10];
 
+	
 	//スプライト
 	Sprite* sprite_ = nullptr;
+	// 抽選番号スプライト
+	Sprite* numberSprite_[10];
+
+	int randomNumber_ = 0;    
 
 	//サウンドデータハンドル
 	uint32_t GameStart = 0;

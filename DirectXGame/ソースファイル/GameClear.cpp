@@ -54,35 +54,34 @@ void GameClear::Draw() {
 	Sprite::PreDraw(commandList);
 	BGsprite_->Draw();
 
-	for (int i = 0; i < 10; i++) {
-		sprite_[i]->Draw();
-	}
-
-	if (Medal > 99999) {
-		Medal = 99999; //6桁以上にならないようにする
+	//メダル数を最大5桁に制限
+	if (medalCount_ > 99999) {
+		medalCount_ = 99999;
 	}
 
 	//メダル数を文字列に変換
-	std::string countStr = std::to_string(Medal);
+	std::string countStr = std::to_string(medalCount_);
 	size_t digitCount = countStr.length();
 
 	// 基準となる描画開始位置
-	float baseX = 1230.0f, y = 100.0f;
-	float spacing = 50.0f; // 画像の間隔
+	float baseX = 600.0f, y = 560.0f;
+	float spacing = 90.0f;
 
-	// 最小2桁はそのまま描画
 	float x = baseX - (spacing * (digitCount - 1));
 
 	//各桁を対応する画像で描画
 	for (size_t i = 0; i < digitCount; i++) {
-		int index = countStr[i] - '0'; // 0～9 のインデックス
+		int index = countStr[i] - '0';
 		if (index >= 0 && index < 10) {
-			sprite_[i]->SetTextureHandle(TextureHandle_[index]); // テクスチャを変更
-			sprite_[i]->SetPosition({ x, y }); // 位置を更新
-			sprite_[i]->Draw(); // 描画
+			sprite_[i]->SetTextureHandle(TextureHandle_[index]);
+			sprite_[i]->SetPosition({ x, y });
+
+			sprite_[i]->SetSize({ 72.0f, 96.0f });
+			sprite_[i]->Draw();
 		}
-		x += spacing; // 画像の間隔
+		x += spacing;
 	}
+
 
 
 	//スプライト描画後処理
